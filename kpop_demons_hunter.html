@@ -3,35 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kpop demon hunters ^-^</title>
+    <title>K-Pop Demon Hunters ^-^</title>
     <style>
         body{
             background-image: url('https://i.pinimg.com/736x/47/7d/cd/477dcdf79d49952a1bba24ebd6c2e6d6.jpg');
             background-size: cover;
             color: white;
+            font-family: Arial, sans-serif;
         }
-        div {
-            background-color: rgba(73, 15, 182, 0.767);
+        .container {
+            background-color: rgba(73, 15, 182, 0.8);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
         }
         body a{
             color: rgb(89, 196, 238);
+            font-weight: bold;
+        }
+        .btn-action {
+            font-size: 24px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid white;
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 5px;
+            color: white;
+        }
+        .parental-guide, .reviews, .chat-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        .character-chat {
+            display: inline-block;
+            text-align: center;
+            margin: 10px;
+        }
+        .chat-box {
+            background: white;
+            color: black;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 300px;
+            margin: 10px auto;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <a href="hakona_matata.html"><h2>back to home</h2></a>
-    <div>
-        <h1>kpop demon hunters</h1>
-        <img src="https://i.pinimg.com/1200x/15/15/97/1515975a28af6a1b49e8954f398cd0de.jpg" alt="kpop demon hunters" width="300" height="500">
-        <img src="https://i.pinimg.com/736x/97/40/5d/97405d7321e1b9907791c76a2970ad48.jpg" alt="jinu" width="300">
-        <img src="https://i.pinimg.com/736x/a0/b6/a9/a0b6a9c1b4909e646e463c3dcd9d41e0.jpg" alt="rumi" width="300">
+    <header style="background-color: rgba(0,0,0,0.6); padding: 10px;">
+        <a href="hakona_matata.html" style="color: white;"><h2>back to home</h2></a>
+    </header>
+
+    <div class="container">
+        <h1>K-Pop Demon Hunters</h1>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <img src="https://i.pinimg.com/1200x/15/15/97/1515975a28af6a1b49e8954f398cd0de.jpg" alt="kpop demon hunters" width="300">
+            <img src="https://i.pinimg.com/736x/97/40/5d/97405d7321e1b9907791c76a2970ad48.jpg" alt="jinu" width="300">
+        </div>
+
+        <div>
+            <button class="btn-action" onclick="toggleFavorite('KPOP DEMONS HUNTER')">❤️ Favorite</button>
+            <button class="btn-action" onclick="toggleWatchlist('KPOP DEMONS HUNTER')">📺 Watchlist</button>
+        </div>
+
+        <div><h2>the story:</h2>
+            <h3>In a world where demons threaten humanity, a group of elite K-pop idols lead double lives as skilled demon hunters. By day, they captivate audiences with their music and dance, but by night, they wield ancient weapons and harness mystical powers to protect the innocent from supernatural threats.</h3>
+        </div>
+
+        <div class="parental-guide">
+            <h2>Parental Guide</h2>
+            <p><strong>Is it good for children?</strong> Yes, but better for older children/teens due to stylized action.</p>
+            <p><strong>Bad scenes:</strong> Some demon fighting scenes might be a bit intense.</p>
+        </div>
+
+        <div class="chat-section">
+            <h2>Chat with Characters</h2>
+            <div class="character-chat">
+                <img src="https://i.pinimg.com/736x/97/40/5d/97405d7321e1b9907791c76a2970ad48.jpg" width="100" style="border-radius: 50%; height: 100px; object-fit: cover;">
+                <p>Jinu</p>
+                <button onclick="startChat('Jinu', 'The stage is set, and the hunt is on!')">Chat</button>
+            </div>
+            <div class="character-chat">
+                <img src="https://i.pinimg.com/736x/a0/b6/a9/a0b6a9c1b4909e646e463c3dcd9d41e0.jpg" width="100" style="border-radius: 50%; height: 100px; object-fit: cover;">
+                <p>Rumi</p>
+                <button onclick="startChat('Rumi', 'Let\'s hunt some demons with style!')">Chat</button>
+            </div>
+            <div id="chat-display" class="chat-box">
+                <h4 id="chat-char-name"></h4>
+                <div id="chat-history" style="height: 100px; overflow-y: auto; border: 1px solid #ccc; margin-bottom: 5px; padding: 5px;"></div>
+                <input type="text" id="chat-input" placeholder="Say something..." style="width: 70%;">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+
+        <div class="reviews">
+            <h2>User Reviews</h2>
+            <div id="reviews-list"></div>
+            <textarea id="review-text" placeholder="Write your review here..." style="width: 100%; height: 60px;"></textarea><br>
+            <button onclick="postReview('KPOP DEMONS HUNTER')">Post Review</button>
+        </div>
+
+        <div><h2>the trailer:</h2>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/AzCAwdp1uIQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <a href="https://m.arabseed.show/%D9%81%D9%8A%D9%84%D9%85-kpop-demon-hunters-2025-%D9%85%D8%AA%D8%B1%D8%AC%D9%85/" target="_blank"><h2>watch kpop demon hunters here</h2></a>
     </div>
-    <div><h2>the story:</h2>
-        <h3>In a world where demons threaten humanity, a group of elite K-pop idols lead double lives as skilled demon hunters. By day, they captivate audiences with their music and dance, but by night, they wield ancient weapons and harness mystical powers to protect the innocent from supernatural threats. As they navigate the challenges of fame and secrecy, they must also confront a powerful demon lord determined to plunge the world into darkness.</h3>
-    </div>
-    <div><h2>the trailer:</h2>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/AzCAwdp1uIQ?si=hbAMChG9cltWogsy" >trailer</iframe><br></br>
-    </div>
-    <a href="https://m.arabseed.show/%D9%81%D9%8A%D9%84%D9%85-kpop-demon-hunters-2025-%D9%85%D8%AA%D8%B1%D8%AC%D9%85/" target="_blank"><h2>watch kpop demon hunters here</h2></a><br></br>
+
+    <script src="site-logic.js"></script>
 </body>
 </html>

@@ -3,28 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moana ^-^</title>
+    <title>Encanto ^-^</title>
     <style>
         body{
-            background-image: url('https://i.pinimg.com/1200x/97/28/73/972873baca97c5d5de919d6fa66be87e.jpg');
+            background-image: url('https://i.pinimg.com/1200x/20/8b/7a/208b7a0d4c6d32849880d60c4873775d.jpg');
             background-size: cover;
             color: white;
             font-family: Arial, sans-serif;
         }
         .container {
-            background-color: rgba(67, 200, 253, 0.8);
+            background-color: rgba(138, 43, 226, 0.8);
             padding: 20px;
             margin: 20px;
             border-radius: 10px;
         }
         body a{
-            color: rgb(0, 50, 100);
-            font-weight: bold;
+            color: rgb(255, 223, 0);
         }
         .btn-action {
             font-size: 24px;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.2);
+            background: none;
             border: 1px solid white;
             padding: 5px 10px;
             margin: 5px;
@@ -55,42 +54,42 @@
 </head>
 <body>
     <header style="background-color: rgba(0,0,0,0.6); padding: 10px;">
-        <a href="hakona_matata.html" style="color: white;"><h2>back to home</h2></a>
+        <a href="hakona_matata.html"><h2>back to home</h2></a>
     </header>
 
     <div class="container">
-        <h1>MOANA</h1>
+        <h1>ENCANTO</h1>
         <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <img src="https://i.pinimg.com/1200x/3e/e4/9c/3ee49c9d7b287493602128f46782fb02.jpg" alt="moana" width="300">
-            <img src="https://i.pinimg.com/736x/ce/cd/ad/cecdad4fb9c2195f49e4674f015c78b5.jpg" alt="moana" width="300">
+            <img src="https://i.pinimg.com/736x/a8/ea/5b/a8ea5bc912d770ab0a4fd9bd912d2261.jpg" alt="encanto" width="300">
+            <img src="https://i.pinimg.com/736x/e8/31/6f/e8316f7281f69205930066266014457e.jpg" alt="mirabel" width="300">
         </div>
 
         <div>
-            <button class="btn-action" onclick="toggleFavorite('MOANA')">❤️ Favorite</button>
-            <button class="btn-action" onclick="toggleWatchlist('MOANA')">📺 Watchlist</button>
+            <button class="btn-action" onclick="toggleFavorite('Encanto')">❤️ Favorite</button>
+            <button class="btn-action" onclick="toggleWatchlist('Encanto')">📺 Watchlist</button>
         </div>
 
         <div><h2>the story:</h2>
-            <h3>In ancient Polynesia, when a terrible curse incurred by the demigod Maui reaches Moana's island, she answers the Ocean's call to seek out Maui to set things right.</h3>
+            <h3>The Madrigals are an extraordinary family who live hidden in the mountains of Colombia in a charmed place called the Encanto. The magic of the Encanto has blessed every child in the family with a unique gift -- every child except Mirabel. However, she soon may be the Madrigals' last hope when she discovers that the magic surrounding the Encanto is now in danger.</h3>
         </div>
 
         <div class="parental-guide">
             <h2>Parental Guide</h2>
-            <p><strong>Is it good for children?</strong> Yes, highly recommended. Great themes of bravery and identity.</p>
-            <p><strong>Bad scenes:</strong> Some scary moments with the lava monster Te Kā, but nothing inappropriate.</p>
+            <p><strong>Is it good for children?</strong> Yes, it's a beautiful family-oriented movie about self-worth and family bonds.</p>
+            <p><strong>Bad scenes:</strong> None. Some scenes might be slightly intense for very young children (the house cracking, family pressure), but generally safe.</p>
         </div>
 
         <div class="chat-section">
             <h2>Chat with Characters</h2>
             <div class="character-chat">
-                <img src="https://i.pinimg.com/736x/3e/e4/9c/3ee49c9d7b287493602128f46782fb02.jpg" width="100" style="border-radius: 50%; height: 100px; object-fit: cover;">
-                <p>Moana</p>
-                <button onclick="startChat('Moana', 'See the line where the sky meets the sea? It calls me!')">Chat</button>
+                <img src="https://i.pinimg.com/736x/e8/31/6f/e8316f7281f69205930066266014457e.jpg" width="100" style="border-radius: 50%;">
+                <p>Mirabel</p>
+                <button onclick="startChat('Mirabel', 'Gift or no gift, I am just as special as the rest of my family!')">Chat</button>
             </div>
             <div class="character-chat">
-                <img src="https://i.pinimg.com/736x/21/72/7b/21727b1f5589c362947f689e4726615b.jpg" width="100" style="border-radius: 50%; height: 100px; object-fit: cover;">
-                <p>Maui</p>
-                <button onclick="startChat('Maui', 'You\'re welcome! Also, I\'m a demigod, in case you forgot.')">Chat</button>
+                <img src="https://i.pinimg.com/736x/91/92/7d/91927d6d5f7d8e6a107873400569476c.jpg" width="100" style="border-radius: 50%;">
+                <p>Bruno</p>
+                <button onclick="startChat('Bruno', 'We don\'t talk about Bruno... but I\'m here anyway!')">Chat</button>
             </div>
             <div id="chat-display" class="chat-box">
                 <h4 id="chat-char-name"></h4>
@@ -104,13 +103,13 @@
             <h2>User Reviews</h2>
             <div id="reviews-list"></div>
             <textarea id="review-text" placeholder="Write your review here..." style="width: 100%; height: 60px;"></textarea><br>
-            <button onclick="postReview('MOANA')">Post Review</button>
+            <button onclick="postReview('Encanto')">Post Review</button>
         </div>
 
         <div><h2>the trailer:</h2>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/LKFuXETZUsI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/CaimKeHiudo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
-        <a href="https://w8.mycima.cc/play.php?vid=f134c4fc0" target="_blank"><h2>watch MOANA here</h2></a>
+        <a href="https://www.disneyplus.com/movies/encanto/33no7VAFp998" target="_blank"><h2>watch ENCANTO here</h2></a>
     </div>
 
     <script src="site-logic.js"></script>

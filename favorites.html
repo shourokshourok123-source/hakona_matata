@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorites ❤️</title>
+    <style>
+        body{
+            background-image: url('https://i.pinimg.com/1200x/2e/0f/b0/2e0fb04b84529707a48ba49f81b76a13.jpg');
+            background-size: cover;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .list-container {
+            background: rgba(139, 0, 0, 0.7);
+            margin: 50px auto;
+            padding: 20px;
+            width: 80%;
+            border-radius: 15px;
+        }
+        .list-item {
+            background: rgba(255,255,255,0.1);
+            margin: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px;
+        }
+        button { background: white; color: red; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>My Favorites ❤️</h1>
+    <a href="hakona_matata.html" style="color: yellow;">Back Home</a>
+
+    <div class="list-container" id="favorites-display">
+        <!-- Will be populated by JS -->
+    </div>
+
+    <script>
+        function loadFavorites() {
+            const favs = JSON.parse(localStorage.getItem('favorites')) || [];
+            const display = document.getElementById('favorites-display');
+            display.innerHTML = favs.length ? "" : "<p>No favorites yet!</p>";
+            favs.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'list-item';
+                div.innerHTML = `<span>${item}</span> <button onclick="removeItem('${item}')">Remove</button>`;
+                display.appendChild(div);
+            });
+        }
+
+        function removeItem(item) {
+            let favs = JSON.parse(localStorage.getItem('favorites')) || [];
+            favs = favs.filter(i => i !== item);
+            localStorage.setItem('favorites', JSON.stringify(favs));
+            loadFavorites();
+        }
+
+        window.onload = loadFavorites;
+    </script>
+</body>
+</html>
