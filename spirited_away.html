@@ -3,114 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spirited Away ^-^</title>
-    <style>
-        body{
-            background-image: url('https://i.pinimg.com/1200x/66/0b/df/660bdf73729910f545f47d40608e9a11.jpg');
-            background-size: cover;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            background-color: rgba(0, 100, 0, 0.8);
-            padding: 20px;
-            margin: 20px;
-            border-radius: 10px;
-        }
-        body a{
-            color: rgb(255, 215, 0);
-            font-weight: bold;
-        }
-        .btn-action {
-            font-size: 24px;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid white;
-            padding: 5px 10px;
-            margin: 5px;
-            border-radius: 5px;
-            color: white;
-        }
-        .parental-guide, .reviews, .chat-section {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-        }
-        .character-chat {
-            display: inline-block;
-            text-align: center;
-            margin: 10px;
-        }
-        .chat-box {
-            background: white;
-            color: black;
-            padding: 10px;
-            border-radius: 10px;
-            max-width: 300px;
-            margin: 10px auto;
-            display: none;
-        }
-    </style>
+    <title>Spirited Away - Hakona Matata</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header style="background-color: rgba(0,0,0,0.6); padding: 10px;">
-        <a href="hakona_matata.html" style="color: white;"><h2>back to home</h2></a>
+    <header>
+        <a href="hakona_matata.html" class="logo">
+            <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" alt="Logo">
+            <h2>Hakona Matata</h2>
+        </a>
+        <nav>
+            <a href="hakona_matata.html">Home</a>
+            <a href="favorites.html">Favorites ❤️</a>
+        </nav>
     </header>
 
-    <div class="container">
-        <h1>SPIRITED AWAY</h1>
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <img src="https://i.pinimg.com/1200x/66/0b/df/660bdf73729910f545f47d40608e9a11.jpg" alt="spirited away" width="300">
-        </div>
-
-        <div>
-            <button class="btn-action" onclick="toggleFavorite('SPIRITED AWAY')">❤️ Favorite</button>
-            <button class="btn-action" onclick="toggleWatchlist('SPIRITED AWAY')">📺 Watchlist</button>
-        </div>
-
-        <div><h2>the story:</h2>
-            <h3>During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches and spirits, and where humans are changed into beasts.</h3>
-        </div>
-
-        <div class="parental-guide">
-            <h2>Parental Guide</h2>
-            <p><strong>Is it good for children?</strong> Yes, a masterpiece of imagination. Some spooky spirits though.</p>
-            <p><strong>Bad scenes:</strong> Parents turning into pigs might be scary for very young kids.</p>
-        </div>
-
-        <div class="chat-section">
-            <h2>Chat with Characters</h2>
-            <div class="character-chat">
-                <img src="https://i.pinimg.com/736x/8f/c9/88/8fc9883584857490799986567885408a.jpg" width="100" style="border-radius: 50%; height: 100px; object-fit: cover;">
-                <p>Chihiro</p>
-                <button onclick="startChat('Chihiro', 'I have to save my parents! Can you help me?')">Chat</button>
+    <main class="movie-container">
+        <aside class="poster-side">
+            <img src="https://i.pinimg.com/1200x/66/0b/df/660bdf73729910f545f47d40608e9a11.jpg" alt="Spirited Away Poster">
+            <div class="action-btns">
+                <button class="btn-action" onclick="toggleFavorite('SPIRITED AWAY')">❤️ Favorite</button>
+                <button class="btn-action" onclick="toggleWatchlist('SPIRITED AWAY')">📺 Watchlist</button>
             </div>
-            <div class="character-chat">
-                <img src="https://i.pinimg.com/736x/07/28/0a/07280a9768565a0440360a365f573351.jpg" width="100" style="border-radius: 50%; height: 100px; object-fit: cover;">
-                <p>Haku</p>
-                <button onclick="startChat('Haku', 'Don\'t forget your name, Chihiro.')">Chat</button>
-            </div>
-            <div id="chat-display" class="chat-box">
-                <h4 id="chat-char-name"></h4>
-                <div id="chat-history" style="height: 100px; overflow-y: auto; border: 1px solid #ccc; margin-bottom: 5px; padding: 5px;"></div>
-                <input type="text" id="chat-input" placeholder="Say something..." style="width: 70%;">
-                <button onclick="sendMessage()">Send</button>
-            </div>
-        </div>
+        </aside>
 
-        <div class="reviews">
-            <h2>User Reviews</h2>
-            <div id="reviews-list"></div>
-            <textarea id="review-text" placeholder="Write your review here..." style="width: 100%; height: 60px;"></textarea><br>
-            <button onclick="postReview('SPIRITED AWAY')">Post Review</button>
-        </div>
+        <section class="info-side">
+            <h1>SPIRITED AWAY</h1>
+            <div class="badges">
+                <span class="badge age">G</span>
+                <span class="badge safe">Safe for Kids</span>
+                <span class="badge age">Masterpiece</span>
+            </div>
 
-        <div><h2>the trailer:</h2>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/ByXuk9QqQmc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-        <a href="https://www.netflix.com/title/60023642" target="_blank"><h2>watch SPIRITED AWAY here</h2></a>
-    </div>
+            <p class="story">
+                During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, and where humans are changed into beasts.
+            </p>
+
+            <div class="parental-guide">
+                <h3>Parental Guide</h3>
+                <p><strong>Review:</strong> One of the greatest animated films of all time. Themes of courage, hard work, and environmentalism.</p>
+                <p><strong>Sensitive Scenes:</strong> Parents turning into pigs might be scary. No-Face can be a bit frightening when he starts eating people.</p>
+
+                <div id="user-warnings-list"></div>
+                <div class="chat-input-area" style="margin-top: 10px;">
+                    <input type="text" id="warning-input" placeholder="Contribute a parental warning...">
+                    <button class="btn-action" onclick="postWarning('SPIRITED AWAY')">Post</button>
+                </div>
+            </div>
+
+            <div class="chat-section">
+                <h3>Chat with Characters</h3>
+                <div class="avatar-row">
+                    <div class="avatar-choice" data-name="Chihiro" onclick="selectCharacter('Chihiro')">
+                        <img src="https://i.pinimg.com/1200x/66/0b/df/660bdf73729910f545f47d40608e9a11.jpg" alt="Chihiro">
+                        <p>Chihiro</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Haku" onclick="selectCharacter('Haku')">
+                        <img src="https://i.pinimg.com/736x/21/72/7b/21727b1f5589c362947f689e4726615b.jpg" alt="Haku">
+                        <p>Haku</p>
+                    </div>
+                    <div class="avatar-choice" data-name="No-Face" onclick="selectCharacter('No-Face')">
+                        <img src="https://i.pinimg.com/736x/07/21/2e/07212e6900f6b49040330364f3d2319f.jpg" alt="No-Face">
+                        <p>No-Face</p>
+                    </div>
+                </div>
+                <div class="chat-box" id="chat-history">
+                    <div class="msg char">Select a character above to start chatting!</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button class="btn-action" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <script src="site-logic.js"></script>
 </body>

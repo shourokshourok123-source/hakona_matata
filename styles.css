@@ -1,0 +1,245 @@
+/* Global Styles for Hakona Matata */
+:root {
+    --bg-dark: #0a0a0c;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --accent-blue: #00a8ff;
+    --accent-purple: #9c88ff;
+    --text-white: #ffffff;
+    --text-gray: #b2bec3;
+    --safe-green: #2ecc71;
+    --warning-red: #e74c3c;
+    --badge-gray: #636e72;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    color: white;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+nav a {
+    color: var(--text-gray);
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: var(--accent-blue);
+}
+
+/* Movie Detail Layout */
+.movie-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 40px;
+}
+
+@media (max-width: 800px) {
+    .movie-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.poster-side img {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.info-side h1 {
+    font-size: 3rem;
+    margin-top: 0;
+}
+
+.badges {
+    display: flex;
+    gap: 10px;
+    margin: 1rem 0;
+}
+
+.badge {
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge.age { background: var(--badge-gray); }
+.badge.safe { background: var(--safe-green); }
+.badge.warning { background: var(--warning-red); }
+
+.action-btns {
+    margin: 1.5rem 0;
+}
+
+.btn-action {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: all 0.3s;
+}
+
+.btn-action:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--accent-blue);
+}
+
+/* Chat Section */
+.chat-section {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 2rem;
+}
+
+.avatar-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.avatar-choice {
+    text-align: center;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.3s;
+}
+
+.avatar-choice.active {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.avatar-choice img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+}
+
+.avatar-choice.active img {
+    border-color: var(--accent-blue);
+}
+
+.chat-box {
+    height: 300px;
+    overflow-y: auto;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.msg {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    line-height: 1.4;
+}
+
+.msg.char {
+    align-self: flex-start;
+    background: #34495e;
+}
+
+.msg.user {
+    align-self: flex-end;
+    background: var(--accent-blue);
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input-area input {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Gallery Styles for Home/Favorites */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    text-decoration: none;
+    color: white;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.card-info {
+    padding: 15px;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}

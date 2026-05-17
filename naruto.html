@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moana 2 - Hakona Matata</title>
+    <title>Naruto - Hakona Matata</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -20,47 +20,51 @@
 
     <main class="movie-container">
         <aside class="poster-side">
-            <img src="https://i.pinimg.com/736x/f6/5f/63/f65f638b92b8839a6541e30f5fe45e18.jpg" alt="Moana 2 Poster">
+            <img src="https://i.pinimg.com/1200x/60/76/35/6076353380e2f9d863f829584347781a.jpg" alt="Naruto Poster">
             <div class="action-btns">
-                <button class="btn-action" onclick="toggleFavorite('MOANA 2')">❤️ Favorite</button>
-                <button class="btn-action" onclick="toggleWatchlist('MOANA 2')">📺 Watchlist</button>
+                <button class="btn-action" onclick="toggleFavorite('NARUTO')">❤️ Favorite</button>
+                <button class="btn-action" onclick="toggleWatchlist('NARUTO')">📺 Watchlist</button>
             </div>
         </aside>
 
         <section class="info-side">
-            <h1>MOANA 2</h1>
+            <h1>NARUTO</h1>
             <div class="badges">
-                <span class="badge age">G</span>
-                <span class="badge safe">Safe for Kids</span>
-                <span class="badge age">New Release</span>
+                <span class="badge age">12+</span>
+                <span class="badge safe">Inspiring</span>
+                <span class="badge age">Anime</span>
             </div>
 
             <p class="story">
-                After receiving an unexpected call from her wayfinding ancestors, Moana must journey to the far seas of Oceania and into dangerous, long-lost waters for an adventure unlike anything she’s ever faced.
+                Naruto Uzumaki, a mischievous adolescent ninja, struggles as he searches for recognition from the village and dreams of becoming the Hokage, the village's leader and strongest ninja.
             </p>
 
             <div class="parental-guide">
                 <h3>Parental Guide</h3>
-                <p><strong>Review:</strong> A wonderful sequel that expands the world of Motunui. Great for the whole family.</p>
-                <p><strong>Sensitive Scenes:</strong> Some action-packed ocean sequences that might be intense but are generally safe for all ages.</p>
+                <p><strong>Review:</strong> A classic story of perseverance and friendship. Some violence but very inspiring messages.</p>
+                <p><strong>Sensitive Scenes:</strong> Ninja battles with some blood. Themes of loneliness and exclusion.</p>
 
                 <div id="user-warnings-list"></div>
                 <div class="chat-input-area" style="margin-top: 10px;">
                     <input type="text" id="warning-input" placeholder="Contribute a parental warning...">
-                    <button class="btn-action" onclick="postWarning('MOANA 2')">Post</button>
+                    <button class="btn-action" onclick="postWarning('NARUTO')">Post</button>
                 </div>
             </div>
 
             <div class="chat-section">
                 <h3>Chat with Characters</h3>
                 <div class="avatar-row">
-                    <div class="avatar-choice" data-name="Moana" onclick="selectCharacter('Moana')">
-                        <img src="https://i.pinimg.com/736x/3e/e4/9c/3ee49c9d7b287493602128f46782fb02.jpg" alt="Moana">
-                        <p>Moana</p>
+                    <div class="avatar-choice" data-name="Naruto" onclick="selectCharacter('Naruto')">
+                        <img src="https://i.pinimg.com/1200x/60/76/35/6076353380e2f9d863f829584347781a.jpg" alt="Naruto">
+                        <p>Naruto</p>
                     </div>
-                    <div class="avatar-choice" data-name="Maui" onclick="selectCharacter('Maui')">
-                        <img src="https://i.pinimg.com/736x/21/72/7b/21727b1f5589c362947f689e4726615b.jpg" alt="Maui">
-                        <p>Maui</p>
+                    <div class="avatar-choice" data-name="Sasuke" onclick="selectCharacter('Sasuke')">
+                        <img src="https://i.pinimg.com/736x/8a/12/3a/8a123a4a3301a2e3a0b2e3a1f9e830e0e0e.jpg" alt="Sasuke">
+                        <p>Sasuke</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Sakura" onclick="selectCharacter('Sakura')">
+                        <img src="https://i.pinimg.com/736x/2a/3e/f6/2a3ef6b4c37553f1f337622950543e26.jpg" alt="Sakura">
+                        <p>Sakura</p>
                     </div>
                 </div>
                 <div class="chat-box" id="chat-history">

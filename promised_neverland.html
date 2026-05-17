@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Promised Neverland - Hakona Matata</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="hakona_matata.html" class="logo">
+            <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" alt="Logo">
+            <h2>Hakona Matata</h2>
+        </a>
+        <nav>
+            <a href="hakona_matata.html">Home</a>
+            <a href="favorites.html">Favorites ❤️</a>
+        </nav>
+    </header>
+
+    <main class="movie-container">
+        <aside class="poster-side">
+            <img src="https://i.pinimg.com/1200x/7d/5a/0a/7d5a0a38260655866164f7b605868e82.jpg" alt="The Promised Neverland Poster">
+            <div class="action-btns">
+                <button class="btn-action" onclick="toggleFavorite('THE PROMISED NEVERLAND')">❤️ Favorite</button>
+                <button class="btn-action" onclick="toggleWatchlist('THE PROMISED NEVERLAND')">📺 Watchlist</button>
+            </div>
+        </aside>
+
+        <section class="info-side">
+            <h1>THE PROMISED NEVERLAND</h1>
+            <div class="badges">
+                <span class="badge age">16+</span>
+                <span class="badge warning">Dark Mystery</span>
+                <span class="badge age">Anime</span>
+            </div>
+
+            <p class="story">
+                When three gifted kids at an isolated orphanage discover the secret and sinister purpose they were raised for, they look for a way to escape from their evil caretaker and lead the rest of the children to safety.
+            </p>
+
+            <div class="parental-guide">
+                <h3>Parental Guide</h3>
+                <p><strong>Review:</strong> Extremely suspenseful and dark. A battle of wits between children and a terrifying system. Very engaging for older teens.</p>
+                <p><strong>Sensitive Scenes:</strong> Monsters, discovery of a corpse, and intense psychological pressure. Not for children.</p>
+
+                <div id="user-warnings-list"></div>
+                <div class="chat-input-area" style="margin-top: 10px;">
+                    <input type="text" id="warning-input" placeholder="Contribute a parental warning...">
+                    <button class="btn-action" onclick="postWarning('THE PROMISED NEVERLAND')">Post</button>
+                </div>
+            </div>
+
+            <div class="chat-section">
+                <h3>Chat with Characters</h3>
+                <div class="avatar-row">
+                    <div class="avatar-choice" data-name="Emma (Neverland)" onclick="selectCharacter('Emma (Neverland)')">
+                        <img src="https://i.pinimg.com/1200x/7d/5a/0a/7d5a0a38260655866164f7b605868e82.jpg" alt="Emma">
+                        <p>Emma</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Norman" onclick="selectCharacter('Norman')">
+                        <img src="https://i.pinimg.com/736x/2a/3e/f6/2a3ef6b4c37553f1f337622950543e26.jpg" alt="Norman">
+                        <p>Norman</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Ray" onclick="selectCharacter('Ray')">
+                        <img src="https://i.pinimg.com/736x/90/3d/8c/903d8c1c4f4a9b6c0b5f543265882e75.jpg" alt="Ray">
+                        <p>Ray</p>
+                    </div>
+                </div>
+                <div class="chat-box" id="chat-history">
+                    <div class="msg char">Select a character above to start chatting!</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button class="btn-action" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="site-logic.js"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moana 2 - Hakona Matata</title>
+    <title>My Neighbor Totoro - Hakona Matata</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -20,47 +20,51 @@
 
     <main class="movie-container">
         <aside class="poster-side">
-            <img src="https://i.pinimg.com/736x/f6/5f/63/f65f638b92b8839a6541e30f5fe45e18.jpg" alt="Moana 2 Poster">
+            <img src="https://i.pinimg.com/1200x/01/2d/8c/012d8c3666d9f8f86f37f39446f23f03.jpg" alt="Totoro Poster">
             <div class="action-btns">
-                <button class="btn-action" onclick="toggleFavorite('MOANA 2')">❤️ Favorite</button>
-                <button class="btn-action" onclick="toggleWatchlist('MOANA 2')">📺 Watchlist</button>
+                <button class="btn-action" onclick="toggleFavorite('MY NEIGHBOR TOTORO')">❤️ Favorite</button>
+                <button class="btn-action" onclick="toggleWatchlist('MY NEIGHBOR TOTORO')">📺 Watchlist</button>
             </div>
         </aside>
 
         <section class="info-side">
-            <h1>MOANA 2</h1>
+            <h1>MY NEIGHBOR TOTORO</h1>
             <div class="badges">
                 <span class="badge age">G</span>
                 <span class="badge safe">Safe for Kids</span>
-                <span class="badge age">New Release</span>
+                <span class="badge age">Classic</span>
             </div>
 
             <p class="story">
-                After receiving an unexpected call from her wayfinding ancestors, Moana must journey to the far seas of Oceania and into dangerous, long-lost waters for an adventure unlike anything she’s ever faced.
+                When two girls move to the country to be near their ailing mother, they have adventures with the wondrous forest spirits who live nearby.
             </p>
 
             <div class="parental-guide">
                 <h3>Parental Guide</h3>
-                <p><strong>Review:</strong> A wonderful sequel that expands the world of Motunui. Great for the whole family.</p>
-                <p><strong>Sensitive Scenes:</strong> Some action-packed ocean sequences that might be intense but are generally safe for all ages.</p>
+                <p><strong>Review:</strong> One of the most heartwarming films ever made. Perfectly safe and delightful for all ages.</p>
+                <p><strong>Sensitive Scenes:</strong> None. It's pure magic.</p>
 
                 <div id="user-warnings-list"></div>
                 <div class="chat-input-area" style="margin-top: 10px;">
                     <input type="text" id="warning-input" placeholder="Contribute a parental warning...">
-                    <button class="btn-action" onclick="postWarning('MOANA 2')">Post</button>
+                    <button class="btn-action" onclick="postWarning('MY NEIGHBOR TOTORO')">Post</button>
                 </div>
             </div>
 
             <div class="chat-section">
                 <h3>Chat with Characters</h3>
                 <div class="avatar-row">
-                    <div class="avatar-choice" data-name="Moana" onclick="selectCharacter('Moana')">
-                        <img src="https://i.pinimg.com/736x/3e/e4/9c/3ee49c9d7b287493602128f46782fb02.jpg" alt="Moana">
-                        <p>Moana</p>
+                    <div class="avatar-choice" data-name="Totoro" onclick="selectCharacter('Totoro')">
+                        <img src="https://i.pinimg.com/1200x/01/2d/8c/012d8c3666d9f8f86f37f39446f23f03.jpg" alt="Totoro">
+                        <p>Totoro</p>
                     </div>
-                    <div class="avatar-choice" data-name="Maui" onclick="selectCharacter('Maui')">
-                        <img src="https://i.pinimg.com/736x/21/72/7b/21727b1f5589c362947f689e4726615b.jpg" alt="Maui">
-                        <p>Maui</p>
+                    <div class="avatar-choice" data-name="Satsuki" onclick="selectCharacter('Satsuki')">
+                        <img src="https://i.pinimg.com/736x/f6/5f/63/f65f638b92b8839a6541e30f5fe45e18.jpg" alt="Satsuki">
+                        <p>Satsuki</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Mei" onclick="selectCharacter('Mei')">
+                        <img src="https://i.pinimg.com/736x/a8/ea/5b/a8ea5bc912d770ab0a4fd9bd912d2261.jpg" alt="Mei">
+                        <p>Mei</p>
                     </div>
                 </div>
                 <div class="chat-box" id="chat-history">

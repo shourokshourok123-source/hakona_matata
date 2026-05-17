@@ -3,51 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My WatchList 📺</title>
-    <style>
-        body{
-            background-image: url('https://i.pinimg.com/1200x/2e/0f/b0/2e0fb04b84529707a48ba49f81b76a13.jpg');
-            background-size: cover;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .list-container {
-            background: rgba(0,0,0,0.7);
-            margin: 50px auto;
-            padding: 20px;
-            width: 80%;
-            border-radius: 15px;
-        }
-        .list-item {
-            background: rgba(255,255,255,0.1);
-            margin: 10px;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 10px;
-        }
-        button { background: red; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
-    </style>
+    <title>Watchlist - Hakona Matata</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>My WatchList 📺</h1>
-    <a href="hakona_matata.html" style="color: yellow;">Back Home</a>
+    <header>
+        <a href="hakona_matata.html" class="logo">
+            <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" alt="Logo">
+            <h2>Hakona Matata</h2>
+        </a>
+        <nav>
+            <a href="hakona_matata.html">Home</a>
+            <a href="favorites.html">Favorites ❤️</a>
+        </nav>
+    </header>
 
-    <div class="list-container" id="watchlist-display">
-        <!-- Will be populated by JS -->
-    </div>
+    <main style="padding: 2rem 5%;">
+        <h1 style="text-align: center; margin-bottom: 2rem;">My WatchList 📺</h1>
+        <div id="watchlist-container" style="max-width: 600px; margin: 0 auto; background: var(--card-bg); padding: 20px; border-radius: 15px;">
+            <div id="watchlist-display">
+                <!-- Will be populated by JS -->
+            </div>
+        </div>
+    </main>
 
     <script>
         function loadWatchlist() {
             const wl = JSON.parse(localStorage.getItem('watchlist')) || [];
             const display = document.getElementById('watchlist-display');
-            display.innerHTML = wl.length ? "" : "<p>Your watchlist is empty!</p>";
+            display.innerHTML = wl.length ? "" : "<p style='text-align:center;'>Your watchlist is empty!</p>";
             wl.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'list-item';
-                div.innerHTML = `<span>${item}</span> <button onclick="removeItem('${item}')">Remove</button>`;
+                div.style.background = "rgba(255,255,255,0.05)";
+                div.style.margin = "10px 0";
+                div.style.padding = "15px";
+                div.style.display = "flex";
+                div.style.justifyContent = "space-between";
+                div.style.alignItems = "center";
+                div.style.borderRadius = "8px";
+                div.innerHTML = `
+                    <span style="font-weight:bold; font-size:1.1rem;">${item}</span>
+                    <button class="btn-action" style="background:var(--warning-red); border:none;" onclick="removeItem('${item}')">Remove</button>
+                `;
                 display.appendChild(div);
             });
         }

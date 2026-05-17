@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moana - Hakona Matata</title>
+    <title>Demon Slayer - Hakona Matata</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -20,52 +20,52 @@
 
     <main class="movie-container">
         <aside class="poster-side">
-            <img src="https://i.pinimg.com/1200x/3e/e4/9c/3ee49c9d7b287493602128f46782fb02.jpg" alt="Moana Poster">
+            <img src="https://i.pinimg.com/1200x/4b/86/e1/4b86e18b0a43210ff79558f3ed211b62.jpg" alt="Demon Slayer Poster">
 
             <div class="action-btns">
-                <button class="btn-action" onclick="toggleFavorite('MOANA')">❤️ Favorite</button>
-                <button class="btn-action" onclick="toggleWatchlist('MOANA')">📺 Watchlist</button>
+                <button class="btn-action" onclick="toggleFavorite('DEMON SLAYER')">❤️ Favorite</button>
+                <button class="btn-action" onclick="toggleWatchlist('DEMON SLAYER')">📺 Watchlist</button>
             </div>
         </aside>
 
         <section class="info-side">
-            <h1>MOANA</h1>
+            <h1>DEMON SLAYER</h1>
             <div class="badges">
-                <span class="badge age">G</span>
-                <span class="badge safe">Safe for Kids</span>
-                <span class="badge age">Adventure</span>
+                <span class="badge age">16+</span>
+                <span class="badge warning">Intense Violence</span>
+                <span class="badge age">Anime</span>
             </div>
 
             <p class="story">
-                In ancient Polynesia, when a terrible curse incurred by the demigod Maui reaches Moana's island, she answers the Ocean's call to seek out Maui to set things right.
+                Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself.
             </p>
 
             <div class="parental-guide">
                 <h3>Parental Guide</h3>
-                <p><strong>Review:</strong> Highly positive. Focuses on independence, bravery, and ancestral connection. No romance, just a great adventure.</p>
-                <p><strong>Sensitive Scenes:</strong> The lava demon Te Kā can be frightening for very young children. Some mild peril during the ocean voyage.</p>
+                <p><strong>Review:</strong> A beautiful story of sibling bonds and determination, but extremely violent. It deals with heavy themes of loss and grief.</p>
+                <p><strong>Sensitive Scenes:</strong> Frequent decapitations and bloody battles. Some demons have disturbing designs. Not recommended for young children.</p>
 
                 <div id="user-warnings-list"></div>
                 <div class="chat-input-area" style="margin-top: 10px;">
                     <input type="text" id="warning-input" placeholder="Contribute a parental warning...">
-                    <button class="btn-action" onclick="postWarning('MOANA')">Post</button>
+                    <button class="btn-action" onclick="postWarning('DEMON SLAYER')">Post</button>
                 </div>
             </div>
 
             <div class="chat-section">
                 <h3>Chat with Characters</h3>
                 <div class="avatar-row">
-                    <div class="avatar-choice" data-name="Moana" onclick="selectCharacter('Moana')">
-                        <img src="https://i.pinimg.com/736x/3e/e4/9c/3ee49c9d7b287493602128f46782fb02.jpg" alt="Moana">
-                        <p>Moana</p>
+                    <div class="avatar-choice" data-name="Tanjiro" onclick="selectCharacter('Tanjiro')">
+                        <img src="https://i.pinimg.com/1200x/20/71/24/207124f5a3423793740e210169115f01.jpg" alt="Tanjiro">
+                        <p>Tanjiro</p>
                     </div>
-                    <div class="avatar-choice" data-name="Maui" onclick="selectCharacter('Maui')">
-                        <img src="https://i.pinimg.com/736x/21/72/7b/21727b1f5589c362947f689e4726615b.jpg" alt="Maui">
-                        <p>Maui</p>
+                    <div class="avatar-choice" data-name="Nezuko" onclick="selectCharacter('Nezuko')">
+                        <img src="https://i.pinimg.com/1200x/2a/3e/f6/2a3ef6b4c37553f1f337622950543e26.jpg" alt="Nezuko">
+                        <p>Nezuko</p>
                     </div>
-                    <div class="avatar-choice" data-name="Gramma Tala" onclick="selectCharacter('Gramma Tala')">
-                        <img src="https://i.pinimg.com/736x/07/21/2e/07212e6900f6b49040330364f3d2319f.jpg" alt="Gramma Tala">
-                        <p>Gramma Tala</p>
+                    <div class="avatar-choice" data-name="Zenitsu" onclick="selectCharacter('Zenitsu')">
+                        <img src="https://i.pinimg.com/1200x/66/0b/df/660bdf73729910f545f47d40608e9a11.jpg" alt="Zenitsu">
+                        <p>Zenitsu</p>
                     </div>
                 </div>
 
@@ -84,16 +84,14 @@
                 <div id="reviews-list"></div>
                 <div class="chat-input-area" style="margin-top: 10px;">
                     <input type="text" id="review-text" placeholder="Write a review...">
-                    <button class="btn-action" onclick="postReview('MOANA')">Post</button>
+                    <button class="btn-action" onclick="postReview('DEMON SLAYER')">Post</button>
                 </div>
             </div>
 
             <div class="trailer-section" style="margin-top: 2rem;">
                 <h3>Official Trailer</h3>
-                <iframe width="100%" height="400" src="https://www.youtube.com/embed/LKFuXETZUsI" frameborder="0" allowfullscreen></iframe>
+                <iframe width="100%" height="400" src="https://www.youtube.com/embed/VQGCKyvzIM4" frameborder="0" allowfullscreen></iframe>
             </div>
-
-            <a href="https://w8.mycima.cc/play.php?vid=f134c4fc0" target="_blank" class="btn-action" style="display: inline-block; margin-top: 20px; text-decoration: none; text-align: center;">Watch Full Movie</a>
         </section>
     </main>
 

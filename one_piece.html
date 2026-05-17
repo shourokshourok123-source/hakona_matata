@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Piece - Hakona Matata</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="hakona_matata.html" class="logo">
+            <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" alt="Logo">
+            <h2>Hakona Matata</h2>
+        </a>
+        <nav>
+            <a href="hakona_matata.html">Home</a>
+            <a href="favorites.html">Favorites ❤️</a>
+        </nav>
+    </header>
+
+    <main class="movie-container">
+        <aside class="poster-side">
+            <img src="https://i.pinimg.com/1200x/41/72/7b/41727b1f5589c362947f689e4726615b.jpg" alt="One Piece Poster">
+            <div class="action-btns">
+                <button class="btn-action" onclick="toggleFavorite('ONE PIECE')">❤️ Favorite</button>
+                <button class="btn-action" onclick="toggleWatchlist('ONE PIECE')">📺 Watchlist</button>
+            </div>
+        </aside>
+
+        <section class="info-side">
+            <h1>ONE PIECE</h1>
+            <div class="badges">
+                <span class="badge age">12+</span>
+                <span class="badge safe">Adventure</span>
+                <span class="badge age">Anime</span>
+            </div>
+
+            <p class="story">
+                Follows the adventures of Monkey D. Luffy and his pirate crew in order to find the greatest treasure ever left by the legendary Pirate, Gold Roger. The famous mystery treasure named "One Piece".
+            </p>
+
+            <div class="parental-guide">
+                <h3>Parental Guide</h3>
+                <p><strong>Review:</strong> An epic tale of adventure and freedom. Focuses on the bonds between friends (crew). Very long but rewarding.</p>
+                <p><strong>Sensitive Scenes:</strong> Cartoonish violence, some emotional moments of loss.</p>
+
+                <div id="user-warnings-list"></div>
+                <div class="chat-input-area" style="margin-top: 10px;">
+                    <input type="text" id="warning-input" placeholder="Contribute a parental warning...">
+                    <button class="btn-action" onclick="postWarning('ONE PIECE')">Post</button>
+                </div>
+            </div>
+
+            <div class="chat-section">
+                <h3>Chat with Characters</h3>
+                <div class="avatar-row">
+                    <div class="avatar-choice" data-name="Luffy" onclick="selectCharacter('Luffy')">
+                        <img src="https://i.pinimg.com/1200x/41/72/7b/41727b1f5589c362947f689e4726615b.jpg" alt="Luffy">
+                        <p>Luffy</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Zoro" onclick="selectCharacter('Zoro')">
+                        <img src="https://i.pinimg.com/736x/21/72/7b/21727b1f5589c362947f689e4726615b.jpg" alt="Zoro">
+                        <p>Zoro</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Nami" onclick="selectCharacter('Nami')">
+                        <img src="https://i.pinimg.com/736x/a8/ea/5b/a8ea5bc912d770ab0a4fd9bd912d2261.jpg" alt="Nami">
+                        <p>Nami</p>
+                    </div>
+                </div>
+                <div class="chat-box" id="chat-history">
+                    <div class="msg char">Select a character above to start chatting!</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button class="btn-action" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="site-logic.js"></script>
+</body>
+</html>

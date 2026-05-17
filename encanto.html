@@ -3,114 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encanto ^-^</title>
-    <style>
-        body{
-            background-image: url('https://i.pinimg.com/1200x/20/8b/7a/208b7a0d4c6d32849880d60c4873775d.jpg');
-            background-size: cover;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            background-color: rgba(138, 43, 226, 0.8);
-            padding: 20px;
-            margin: 20px;
-            border-radius: 10px;
-        }
-        body a{
-            color: rgb(255, 223, 0);
-        }
-        .btn-action {
-            font-size: 24px;
-            cursor: pointer;
-            background: none;
-            border: 1px solid white;
-            padding: 5px 10px;
-            margin: 5px;
-            border-radius: 5px;
-            color: white;
-        }
-        .parental-guide, .reviews, .chat-section {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-        }
-        .character-chat {
-            display: inline-block;
-            text-align: center;
-            margin: 10px;
-        }
-        .chat-box {
-            background: white;
-            color: black;
-            padding: 10px;
-            border-radius: 10px;
-            max-width: 300px;
-            margin: 10px auto;
-            display: none;
-        }
-    </style>
+    <title>Encanto - Hakona Matata</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header style="background-color: rgba(0,0,0,0.6); padding: 10px;">
-        <a href="hakona_matata.html"><h2>back to home</h2></a>
+    <header>
+        <a href="hakona_matata.html" class="logo">
+            <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" alt="Logo">
+            <h2>Hakona Matata</h2>
+        </a>
+        <nav>
+            <a href="hakona_matata.html">Home</a>
+            <a href="favorites.html">Favorites ❤️</a>
+        </nav>
     </header>
 
-    <div class="container">
-        <h1>ENCANTO</h1>
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <img src="https://i.pinimg.com/736x/a8/ea/5b/a8ea5bc912d770ab0a4fd9bd912d2261.jpg" alt="encanto" width="300">
-            <img src="https://i.pinimg.com/736x/e8/31/6f/e8316f7281f69205930066266014457e.jpg" alt="mirabel" width="300">
-        </div>
-
-        <div>
-            <button class="btn-action" onclick="toggleFavorite('Encanto')">❤️ Favorite</button>
-            <button class="btn-action" onclick="toggleWatchlist('Encanto')">📺 Watchlist</button>
-        </div>
-
-        <div><h2>the story:</h2>
-            <h3>The Madrigals are an extraordinary family who live hidden in the mountains of Colombia in a charmed place called the Encanto. The magic of the Encanto has blessed every child in the family with a unique gift -- every child except Mirabel. However, she soon may be the Madrigals' last hope when she discovers that the magic surrounding the Encanto is now in danger.</h3>
-        </div>
-
-        <div class="parental-guide">
-            <h2>Parental Guide</h2>
-            <p><strong>Is it good for children?</strong> Yes, it's a beautiful family-oriented movie about self-worth and family bonds.</p>
-            <p><strong>Bad scenes:</strong> None. Some scenes might be slightly intense for very young children (the house cracking, family pressure), but generally safe.</p>
-        </div>
-
-        <div class="chat-section">
-            <h2>Chat with Characters</h2>
-            <div class="character-chat">
-                <img src="https://i.pinimg.com/736x/e8/31/6f/e8316f7281f69205930066266014457e.jpg" width="100" style="border-radius: 50%;">
-                <p>Mirabel</p>
-                <button onclick="startChat('Mirabel', 'Gift or no gift, I am just as special as the rest of my family!')">Chat</button>
+    <main class="movie-container">
+        <aside class="poster-side">
+            <img src="https://i.pinimg.com/736x/a8/ea/5b/a8ea5bc912d770ab0a4fd9bd912d2261.jpg" alt="Encanto Poster">
+            <div class="action-btns">
+                <button class="btn-action" onclick="toggleFavorite('ENCANTO')">❤️ Favorite</button>
+                <button class="btn-action" onclick="toggleWatchlist('ENCANTO')">📺 Watchlist</button>
             </div>
-            <div class="character-chat">
-                <img src="https://i.pinimg.com/736x/91/92/7d/91927d6d5f7d8e6a107873400569476c.jpg" width="100" style="border-radius: 50%;">
-                <p>Bruno</p>
-                <button onclick="startChat('Bruno', 'We don\'t talk about Bruno... but I\'m here anyway!')">Chat</button>
-            </div>
-            <div id="chat-display" class="chat-box">
-                <h4 id="chat-char-name"></h4>
-                <div id="chat-history" style="height: 100px; overflow-y: auto; border: 1px solid #ccc; margin-bottom: 5px; padding: 5px;"></div>
-                <input type="text" id="chat-input" placeholder="Say something..." style="width: 70%;">
-                <button onclick="sendMessage()">Send</button>
-            </div>
-        </div>
+        </aside>
 
-        <div class="reviews">
-            <h2>User Reviews</h2>
-            <div id="reviews-list"></div>
-            <textarea id="review-text" placeholder="Write your review here..." style="width: 100%; height: 60px;"></textarea><br>
-            <button onclick="postReview('Encanto')">Post Review</button>
-        </div>
+        <section class="info-side">
+            <h1>ENCANTO</h1>
+            <div class="badges">
+                <span class="badge age">G</span>
+                <span class="badge safe">Safe for Kids</span>
+                <span class="badge age">Musical</span>
+            </div>
 
-        <div><h2>the trailer:</h2>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/CaimKeHiudo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-        <a href="https://www.disneyplus.com/movies/encanto/33no7VAFp998" target="_blank"><h2>watch ENCANTO here</h2></a>
-    </div>
+            <p class="story">
+                The Madrigals are an extraordinary family who live hidden in the mountains of Colombia in a charmed place called the Encanto. The magic of the Encanto has blessed every child in the family with a unique gift -- every child except Mirabel.
+            </p>
+
+            <div class="parental-guide">
+                <h3>Parental Guide</h3>
+                <p><strong>Review:</strong> A beautiful exploration of family dynamics and the pressure to be perfect. Excellent music and visuals.</p>
+                <p><strong>Sensitive Scenes:</strong> Some scenes show the family home cracking and crumbling, which might be stressful for very small children.</p>
+
+                <div id="user-warnings-list"></div>
+                <div class="chat-input-area" style="margin-top: 10px;">
+                    <input type="text" id="warning-input" placeholder="Contribute a parental warning...">
+                    <button class="btn-action" onclick="postWarning('ENCANTO')">Post</button>
+                </div>
+            </div>
+
+            <div class="chat-section">
+                <h3>Chat with Characters</h3>
+                <div class="avatar-row">
+                    <div class="avatar-choice" data-name="Mirabel" onclick="selectCharacter('Mirabel')">
+                        <img src="https://i.pinimg.com/736x/a8/ea/5b/a8ea5bc912d770ab0a4fd9bd912d2261.jpg" alt="Mirabel">
+                        <p>Mirabel</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Isabela" onclick="selectCharacter('Isabela')">
+                        <img src="https://i.pinimg.com/736x/9f/8e/5c/9f8e5c8e8e8e8e8e8e8e8e8e8e8e8e8e.jpg" alt="Isabela">
+                        <p>Isabela</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Bruno" onclick="selectCharacter('Bruno')">
+                        <img src="https://i.pinimg.com/736x/21/72/7b/21727b1f5589c362947f689e4726615b.jpg" alt="Bruno">
+                        <p>Bruno</p>
+                    </div>
+                </div>
+                <div class="chat-box" id="chat-history">
+                    <div class="msg char">Select a character above to start chatting!</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button class="btn-action" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <script src="site-logic.js"></script>
 </body>

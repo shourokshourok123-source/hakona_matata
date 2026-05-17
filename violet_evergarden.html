@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Violet Evergarden - Hakona Matata</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="hakona_matata.html" class="logo">
+            <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" alt="Logo">
+            <h2>Hakona Matata</h2>
+        </a>
+        <nav>
+            <a href="hakona_matata.html">Home</a>
+            <a href="favorites.html">Favorites ❤️</a>
+        </nav>
+    </header>
+
+    <main class="movie-container">
+        <aside class="poster-side">
+            <img src="https://i.pinimg.com/1200x/2a/3e/f6/2a3ef6b4c37553f1f337622950543e26.jpg" alt="Violet Evergarden Poster">
+            <div class="action-btns">
+                <button class="btn-action" onclick="toggleFavorite('VIOLET EVERGARDEN')">❤️ Favorite</button>
+                <button class="btn-action" onclick="toggleWatchlist('VIOLET EVERGARDEN')">📺 Watchlist</button>
+            </div>
+        </aside>
+
+        <section class="info-side">
+            <h1>VIOLET EVERGARDEN</h1>
+            <div class="badges">
+                <span class="badge age">13+</span>
+                <span class="badge safe">Emotional</span>
+                <span class="badge age">Anime</span>
+            </div>
+
+            <p class="story">
+                In the aftermath of a great war, Violet Evergarden, a young girl formerly used as a weapon, begins a new life as an Auto Memory Doll, helping people express their feelings through letters while searching for the meaning of the words "I love you."
+            </p>
+
+            <div class="parental-guide">
+                <h3>Parental Guide</h3>
+                <p><strong>Review:</strong> A masterpiece of storytelling and animation. Very emotional and respectful. Teaches empathy and the power of words.</p>
+                <p><strong>Sensitive Scenes:</strong> Flashbacks to war scenes, showing some blood and combat. Themes of grief and loss are central.</p>
+
+                <div id="user-warnings-list"></div>
+                <div class="chat-input-area" style="margin-top: 10px;">
+                    <input type="text" id="warning-input" placeholder="Contribute a parental warning...">
+                    <button class="btn-action" onclick="postWarning('VIOLET EVERGARDEN')">Post</button>
+                </div>
+            </div>
+
+            <div class="chat-section">
+                <h3>Chat with Characters</h3>
+                <div class="avatar-row">
+                    <div class="avatar-choice" data-name="Violet" onclick="selectCharacter('Violet')">
+                        <img src="https://i.pinimg.com/1200x/2a/3e/f6/2a3ef6b4c37553f1f337622950543e26.jpg" alt="Violet">
+                        <p>Violet</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Gilbert" onclick="selectCharacter('Gilbert')">
+                        <img src="https://i.pinimg.com/736x/8e/4a/12/8e4a1205342a3e0b2e3a1f9e830e0e0e.jpg" alt="Gilbert">
+                        <p>Gilbert</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Benedict" onclick="selectCharacter('Benedict')">
+                        <img src="https://i.pinimg.com/736x/c5/4a/33/c54a3301a2e3a0b2e3a1f9e830e0e0e.jpg" alt="Benedict">
+                        <p>Benedict</p>
+                    </div>
+                </div>
+                <div class="chat-box" id="chat-history">
+                    <div class="msg char">Select a character above to start chatting!</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button class="btn-action" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="site-logic.js"></script>
+</body>
+</html>

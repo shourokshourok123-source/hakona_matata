@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Death Note - Hakona Matata</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="hakona_matata.html" class="logo">
+            <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" alt="Logo">
+            <h2>Hakona Matata</h2>
+        </a>
+        <nav>
+            <a href="hakona_matata.html">Home</a>
+            <a href="favorites.html">Favorites ❤️</a>
+        </nav>
+    </header>
+
+    <main class="movie-container">
+        <aside class="poster-side">
+            <img src="https://i.pinimg.com/1200x/90/3d/8c/903d8c1c4f4a9b6c0b5f543265882e75.jpg" alt="Death Note Poster">
+            <div class="action-btns">
+                <button class="btn-action" onclick="toggleFavorite('DEATH NOTE')">❤️ Favorite</button>
+                <button class="btn-action" onclick="toggleWatchlist('DEATH NOTE')">📺 Watchlist</button>
+            </div>
+        </aside>
+
+        <section class="info-side">
+            <h1>DEATH NOTE</h1>
+            <div class="badges">
+                <span class="badge age">18+</span>
+                <span class="badge warning">Psychological Thriller</span>
+                <span class="badge age">Anime</span>
+            </div>
+
+            <p class="story">
+                An intelligent high school student goes on a secret crusade to eliminate criminals from the world after discovering a notebook capable of killing anyone whose name is written into it.
+            </p>
+
+            <div class="parental-guide">
+                <h3>Parental Guide</h3>
+                <p><strong>Review:</strong> A dark, complex psychological game. Very engaging but explores themes of morality, death, and god complexes.</p>
+                <p><strong>Sensitive Scenes:</strong> Many scenes of people dying of heart attacks. Dark atmosphere and themes of murder.</p>
+
+                <div id="user-warnings-list"></div>
+                <div class="chat-input-area" style="margin-top: 10px;">
+                    <input type="text" id="warning-input" placeholder="Contribute a parental warning...">
+                    <button class="btn-action" onclick="postWarning('DEATH NOTE')">Post</button>
+                </div>
+            </div>
+
+            <div class="chat-section">
+                <h3>Chat with Characters</h3>
+                <div class="avatar-row">
+                    <div class="avatar-choice" data-name="L (Death Note)" onclick="selectCharacter('L (Death Note)')">
+                        <img src="https://i.pinimg.com/1200x/20/4e/71/204e71911910a3014a4c4e74f015c78b5.jpg" alt="L">
+                        <p>L</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Light" onclick="selectCharacter('Light')">
+                        <img src="https://i.pinimg.com/736x/8a/12/3a/8a123a4a3301a2e3a0b2e3a1f9e830e0e0e.jpg" alt="Light">
+                        <p>Light</p>
+                    </div>
+                    <div class="avatar-choice" data-name="Ryuk" onclick="selectCharacter('Ryuk')">
+                        <img src="https://i.pinimg.com/736x/21/72/7b/21727b1f5589c362947f689e4726615b.jpg" alt="Ryuk">
+                        <p>Ryuk</p>
+                    </div>
+                </div>
+                <div class="chat-box" id="chat-history">
+                    <div class="msg char">Select a character above to start chatting!</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button class="btn-action" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="site-logic.js"></script>
+</body>
+</html>
