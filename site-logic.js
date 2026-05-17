@@ -1,0 +1,117 @@
+
+let currentCharacter = "";
+let charIntro = "";
+
+// Initialize Storage
+if (!localStorage.getItem('favorites')) localStorage.setItem('favorites', JSON.stringify([]));
+if (!localStorage.getItem('watchlist')) localStorage.setItem('watchlist', JSON.stringify([]));
+if (!localStorage.getItem('reviews')) localStorage.setItem('reviews', JSON.stringify({}));
+
+function toggleFavorite(title) {
+    let favs = JSON.parse(localStorage.getItem('favorites'));
+    title = title.toUpperCase();
+    if (favs.includes(title)) {
+        favs = favs.filter(t => t !== title);
+        alert(title + " removed from Favorites ❤️");
+    } else {
+        favs.push(title);
+        alert(title + " added to Favorites ❤️");
+    }
+    localStorage.setItem('favorites', JSON.stringify(favs));
+}
+
+function toggleWatchlist(title) {
+    let wl = JSON.parse(localStorage.getItem('watchlist'));
+    title = title.toUpperCase();
+    if (wl.includes(title)) {
+        wl = wl.filter(t => t !== title);
+        alert(title + " removed from Watchlist 📺");
+    } else {
+        wl.push(title);
+        alert(title + " added to Watchlist 📺");
+    }
+    localStorage.setItem('watchlist', JSON.stringify(wl));
+}
+
+function postReview(title) {
+    const text = document.getElementById('review-text').value;
+    if (!text) return;
+    title = title.toUpperCase();
+    let reviews = JSON.parse(localStorage.getItem('reviews'));
+    if (!reviews[title]) reviews[title] = [];
+    reviews[title].push(text);
+    localStorage.setItem('reviews', JSON.stringify(reviews));
+    document.getElementById('review-text').value = "";
+    displayReviews(title);
+}
+
+function displayReviews(title) {
+    const list = document.getElementById('reviews-list');
+    if (!list) return;
+    title = title.toUpperCase();
+    let reviews = JSON.parse(localStorage.getItem('reviews'));
+    list.innerHTML = "";
+    (reviews[title] || []).forEach(r => {
+        const div = document.createElement('div');
+        div.style.borderBottom = "1px solid white";
+        div.style.padding = "5px";
+        div.innerText = r;
+        list.appendChild(div);
+    });
+}
+
+// Chat logic
+function startChat(name, intro) {
+    currentCharacter = name;
+    charIntro = intro;
+    document.getElementById('chat-display').style.display = "block";
+    document.getElementById('chat-char-name').innerText = "Chat with " + name;
+    const history = document.getElementById('chat-history');
+    history.innerHTML = `<p><strong>${name}:</strong> ${intro}</p>`;
+    document.getElementById('chat-input').focus();
+}
+
+function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const msg = input.value;
+    if (!msg) return;
+
+    const history = document.getElementById('chat-history');
+    history.innerHTML += `<p><strong>You:</strong> ${msg}</p>`;
+    input.value = "";
+    history.scrollTop = history.scrollHeight;
+
+    // Fake response
+    setTimeout(() => {
+        let response = "";
+        if (currentCharacter === 'Mirabel') {
+            response = "I'm just doing my best to help the family! What do you think about our Casita?";
+        } else if (currentCharacter === 'Bruno') {
+            response = "The future is unpredictable, but I hope it's bright for you!";
+        } else if (currentCharacter === 'Moana') {
+            response = "The ocean is calling me! Do you like sailing too?";
+        } else if (currentCharacter === 'Maui') {
+            response = "You're welcome! I mean... what was your question again? I'm awesome, right?";
+        } else if (currentCharacter === 'Jinu') {
+            response = "Stay alert, the demons could be anywhere. Do you have your weapon ready?";
+        } else if (currentCharacter === 'Rumi') {
+            response = "Our music is our strength. Let's keep the rhythm going!";
+        } else {
+            response = "That's very interesting! Tell me more.";
+        }
+        history.innerHTML += `<p><strong>${currentCharacter}:</strong> ${response}</p>`;
+        history.scrollTop = history.scrollHeight;
+    }, 1000);
+}
+
+// Load reviews on page load
+window.addEventListener('load', function() {
+    const path = window.location.pathname;
+    const filename = path.split("/").pop().split(".")[0];
+    if (filename) {
+        // Special case for moana2 -> MOANA 2
+        let page = filename.toUpperCase().replace(/_/g, " ");
+        if (page === "MOANA2") page = "MOANA 2";
+        displayReviews(page);
+    }
+});
