@@ -91,7 +91,15 @@ function sendMessage() {
     if (!msg) return;
 
     const history = document.getElementById('chat-history');
-    history.innerHTML += `<p><strong>You:</strong> ${msg}</p>`;
+
+    // Performance optimization: Use appendChild instead of innerHTML += to avoid re-parsing the entire chat history
+    const userMsg = document.createElement('p');
+    const userStrong = document.createElement('strong');
+    userStrong.textContent = "You: ";
+    userMsg.appendChild(userStrong);
+    userMsg.appendChild(document.createTextNode(msg));
+    history.appendChild(userMsg);
+
     input.value = "";
     history.scrollTop = history.scrollHeight;
 
@@ -113,7 +121,14 @@ function sendMessage() {
         } else {
             response = "That's very interesting! Tell me more.";
         }
-        history.innerHTML += `<p><strong>${currentCharacter}:</strong> ${response}</p>`;
+
+        const botMsg = document.createElement('p');
+        const botStrong = document.createElement('strong');
+        botStrong.textContent = currentCharacter + ": ";
+        botMsg.appendChild(botStrong);
+        botMsg.appendChild(document.createTextNode(response));
+        history.appendChild(botMsg);
+
         history.scrollTop = history.scrollHeight;
     }, 1000);
 }

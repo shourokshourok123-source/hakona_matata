@@ -43,13 +43,32 @@
         function loadWatchlist() {
             const wl = JSON.parse(localStorage.getItem('watchlist')) || [];
             const display = document.getElementById('watchlist-display');
-            display.innerHTML = wl.length ? "" : "<p>Your watchlist is empty!</p>";
+
+            if (!wl.length) {
+                display.innerHTML = "<p>Your watchlist is empty!</p>";
+                return;
+            }
+
+            // Performance optimization: Use DocumentFragment and textContent to minimize layout thrashing and prevent XSS
+            display.textContent = "";
+            const fragment = document.createDocumentFragment();
+
             wl.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'list-item';
-                div.innerHTML = `<span>${item}</span> <button onclick="removeItem('${item}')">Remove</button>`;
-                display.appendChild(div);
+
+                const span = document.createElement('span');
+                span.textContent = item;
+
+                const button = document.createElement('button');
+                button.textContent = "Remove";
+                button.onclick = () => removeItem(item);
+
+                div.appendChild(span);
+                div.appendChild(button);
+                fragment.appendChild(div);
             });
+            display.appendChild(fragment);
         }
 
         function removeItem(item) {
@@ -59,7 +78,8 @@
             loadWatchlist();
         }
 
-        window.onload = loadWatchlist;
+        // Optimization: Use DOMContentLoaded instead of window.onload to show content faster
+        window.addEventListener('DOMContentLoaded', loadWatchlist);
     </script>
 </body>
 </html>
