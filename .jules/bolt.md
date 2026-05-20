@@ -7,3 +7,7 @@
 ## 2026-05-19 - Native Lazy Loading
 **Learning:** Native `loading="lazy"` on iframes and images is a simple but powerful optimization for static, media-heavy sites. It's especially effective when assets are hosted on external sites (like Pinterest or YouTube) where we can't control the server response or compression.
 **Action:** Always check for off-screen media and iframes to apply native lazy loading early in the performance optimization process.
+
+## 2024-05-23 - DOM Parsing Bottleneck in Chat
+**Learning:** Using `innerHTML +=` for chat histories or long lists is a major performance anti-pattern. It forces the browser to re-parse the entire existing HTML string into a new DOM tree every time a single message is added, leading to O(N^2) complexity relative to the number of messages.
+**Action:** Always use `appendChild` with `createElement` and `textContent` for appending to live lists. This is O(1) per update and significantly more efficient as the list grows.
