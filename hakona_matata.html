@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Preconnect to image and video domains to reduce DNS/TCP/TLS latency -->
+    <link rel="preconnect" href="https://i.pinimg.com">
+    <link rel="dns-prefetch" href="https://i.pinimg.com">
     <title>hakona matata ^-^</title>
     <style>
         div{ background-color: rgba(46, 43, 236, 0.616); }
@@ -49,7 +52,8 @@
 <body>
     <header>
         <div id="logo">
-            <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" alt="logo photo" width="100">
+    <!-- Prioritize Largest Contentful Paint (LCP) elements -->
+            <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" alt="logo photo" width="100" fetchpriority="high">
             <h2>hakona Matata</h2>
         </div>
         <nav>
@@ -69,7 +73,8 @@
             <h2 style="padding-left: 20px;">Latest Cartoons & Animes</h2>
             <div class="cartoon-gallery">
                 <div class="cartoon-item">
-                    <img src="https://i.pinimg.com/736x/f6/5f/63/f65f638b92b8839a6541e30f5fe45e18.jpg" alt="moana 2" loading="lazy">
+    <!-- Prioritize Largest Contentful Paint (LCP) elements -->
+                    <img src="https://i.pinimg.com/736x/f6/5f/63/f65f638b92b8839a6541e30f5fe45e18.jpg" alt="moana 2" fetchpriority="high">
                     <a href="moana2.html"><h3>MOANA 2</h3></a>
                 </div>
                 <div class="cartoon-item">
