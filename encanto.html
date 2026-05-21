@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Preconnect to image and video domains to reduce DNS/TCP/TLS latency -->
+    <link rel="preconnect" href="https://i.pinimg.com">
+    <link rel="preconnect" href="https://www.youtube.com">
     <title>Encanto ^-^</title>
     <style>
         body{
@@ -60,7 +63,8 @@
     <div class="container">
         <h1>ENCANTO</h1>
         <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <img src="https://i.pinimg.com/736x/a8/ea/5b/a8ea5bc912d770ab0a4fd9bd912d2261.jpg" alt="encanto" width="300">
+    <!-- Prioritize Largest Contentful Paint (LCP) elements -->
+            <img src="https://i.pinimg.com/736x/a8/ea/5b/a8ea5bc912d770ab0a4fd9bd912d2261.jpg" alt="encanto" width="300" fetchpriority="high">
             <img src="https://i.pinimg.com/736x/e8/31/6f/e8316f7281f69205930066266014457e.jpg" alt="mirabel" width="300">
         </div>
 
