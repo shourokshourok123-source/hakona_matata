@@ -11,3 +11,7 @@
 ## 2024-05-23 - DOM Parsing Bottleneck in Chat
 **Learning:** Using `innerHTML +=` for chat histories or long lists is a major performance anti-pattern. It forces the browser to re-parse the entire existing HTML string into a new DOM tree every time a single message is added, leading to O(N^2) complexity relative to the number of messages.
 **Action:** Always use `appendChild` with `createElement` and `textContent` for appending to live lists. This is O(1) per update and significantly more efficient as the list grows.
+
+## 2025-01-24 - Optimizing LCP and Resource Discovery
+**Learning:** Native `loading="lazy"` should never be applied to Above-The-Fold (ATF) assets like logos or primary movie posters, as it delays the browser's discovery of the Largest Contentful Paint (LCP) element. Furthermore, for sites relying on third-party CDNs (e.g., Pinterest, YouTube), the cost of DNS lookup and TCP/TLS handshakes can be mitigated using `preconnect` and `dns-prefetch` resource hints.
+**Action:** Identify LCP candidates and set `fetchpriority="high"` while ensuring `loading="lazy"` is removed. Always implement resource hints for critical third-party domains to shave off early-load latency.
