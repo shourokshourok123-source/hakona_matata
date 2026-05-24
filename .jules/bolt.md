@@ -11,3 +11,7 @@
 ## 2024-05-23 - DOM Parsing Bottleneck in Chat
 **Learning:** Using `innerHTML +=` for chat histories or long lists is a major performance anti-pattern. It forces the browser to re-parse the entire existing HTML string into a new DOM tree every time a single message is added, leading to O(N^2) complexity relative to the number of messages.
 **Action:** Always use `appendChild` with `createElement` and `textContent` for appending to live lists. This is O(1) per update and significantly more efficient as the list grows.
+
+## 2025-05-24 - Resource Hints and LCP Optimization
+**Learning:** Resource hints (`preconnect`, `dns-prefetch`) are critical for reducing connection latency to third-party domains like Pinterest and YouTube. Preloading background images and using `fetchpriority="high"` for primary assets significantly improves the Largest Contentful Paint (LCP) by telling the browser to prioritize these assets before it even finishes parsing the CSS or standard image queue.
+**Action:** Identify LCP candidates (backgrounds, logos, posters) and use `link rel="preload"` and `fetchpriority="high"` to optimize their loading. Apply resource hints for all external domains discovered in the codebase.
