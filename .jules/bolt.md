@@ -11,3 +11,7 @@
 ## 2024-05-23 - DOM Parsing Bottleneck in Chat
 **Learning:** Using `innerHTML +=` for chat histories or long lists is a major performance anti-pattern. It forces the browser to re-parse the entire existing HTML string into a new DOM tree every time a single message is added, leading to O(N^2) complexity relative to the number of messages.
 **Action:** Always use `appendChild` with `createElement` and `textContent` for appending to live lists. This is O(1) per update and significantly more efficient as the list grows.
+
+## 2024-05-27 - Critical Path Optimization
+**Learning:** For static sites with heavy external assets (Pinterest, YouTube), resource hints like `preconnect` are vital. Preloading background images specified in CSS is crucial because browsers normally find them late in the waterfall. Using `fetchpriority="high"` on the primary LCP image (logo or hero) further reduces TTFB to LCP. Note: `dns-prefetch` is redundant when `preconnect` is used for the same domain.
+**Action:** Apply `preconnect` for CDNs, `preload` for critical CSS-defined backgrounds, and `fetchpriority` for hero images. Avoid redundant `dns-prefetch`.
