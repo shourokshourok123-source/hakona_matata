@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-Pop Demon Hunters ^-^</title>
+    <!-- Preconnect to Pinterest and YouTube for faster resource loading -->
+    <link rel="preconnect" href="https://i.pinimg.com">
+    <link rel="preconnect" href="https://www.youtube.com">
+    <!-- Preload critical background image -->
+    <link rel="preload" as="image" href="https://i.pinimg.com/736x/47/7d/cd/477dcdf79d49952a1bba24ebd6c2e6d6.jpg">
     <style>
         body{
             background-image: url('https://i.pinimg.com/736x/47/7d/cd/477dcdf79d49952a1bba24ebd6c2e6d6.jpg');
@@ -61,7 +66,7 @@
     <div class="container">
         <h1>K-Pop Demon Hunters</h1>
         <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <img src="https://i.pinimg.com/1200x/15/15/97/1515975a28af6a1b49e8954f398cd0de.jpg" alt="kpop demon hunters" width="300">
+            <img src="https://i.pinimg.com/1200x/15/15/97/1515975a28af6a1b49e8954f398cd0de.jpg" alt="kpop demon hunters" width="300" fetchpriority="high">
             <img src="https://i.pinimg.com/736x/97/40/5d/97405d7321e1b9907791c76a2970ad48.jpg" alt="jinu" width="300">
         </div>
 
