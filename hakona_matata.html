@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hakona matata ^-^</title>
+    <link rel="preconnect" href="https://i.pinimg.com">
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preload" as="image" href="https://i.pinimg.com/1200x/2e/0f/b0/2e0fb04b84529707a48ba49f81b76a13.jpg">
     <style>
         div{ background-color: rgba(46, 43, 236, 0.616); }
         div>h2{ color: white; text-align: left; }
@@ -49,7 +52,8 @@
 <body>
     <header>
         <div id="logo">
-            <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" alt="logo photo" width="100">
+            <!-- Optimization: fetchpriority="high" for above-the-fold logo to improve LCP -->
+            <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" alt="logo photo" width="100" fetchpriority="high">
             <h2>hakona Matata</h2>
         </div>
         <nav>
@@ -69,11 +73,13 @@
             <h2 style="padding-left: 20px;">Latest Cartoons & Animes</h2>
             <div class="cartoon-gallery">
                 <div class="cartoon-item">
-                    <img src="https://i.pinimg.com/736x/f6/5f/63/f65f638b92b8839a6541e30f5fe45e18.jpg" alt="moana 2" loading="lazy">
+                    <!-- Optimization: Removed loading="lazy" and added fetchpriority="high" for above-the-fold content -->
+                    <img src="https://i.pinimg.com/736x/f6/5f/63/f65f638b92b8839a6541e30f5fe45e18.jpg" alt="moana 2" fetchpriority="high">
                     <a href="moana2.html"><h3>MOANA 2</h3></a>
                 </div>
                 <div class="cartoon-item">
-                    <img src="https://i.pinimg.com/1200x/4b/86/e1/4b86e18b0a43210ff79558f3ed211b62.jpg" alt="kpop demons hunter" loading="lazy">
+                    <!-- Optimization: Removed loading="lazy" for above-the-fold content -->
+                    <img src="https://i.pinimg.com/1200x/4b/86/e1/4b86e18b0a43210ff79558f3ed211b62.jpg" alt="kpop demons hunter">
                     <a href="kpop_demons_hunter.html"><h3>KPOP DEMONS HUNTER</h3></a>
                 </div>
                 <div class="cartoon-item">
