@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spirited Away ^-^</title>
+    <!-- ⚡ Bolt: Optimized LCP by preconnecting to image CDN and preloading background images -->
+    <link rel="preconnect" href="https://i.pinimg.com">
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preload" as="image" href="https://i.pinimg.com/1200x/66/0b/df/660bdf73729910f545f47d40608e9a11.jpg">
     <style>
         body{
             background-image: url('https://i.pinimg.com/1200x/66/0b/df/660bdf73729910f545f47d40608e9a11.jpg');
@@ -61,7 +65,7 @@
     <div class="container">
         <h1>SPIRITED AWAY</h1>
         <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <img src="https://i.pinimg.com/1200x/66/0b/df/660bdf73729910f545f47d40608e9a11.jpg" alt="spirited away" width="300">
+            <img src="https://i.pinimg.com/1200x/66/0b/df/660bdf73729910f545f47d40608e9a11.jpg" alt="spirited away" width="300" fetchpriority="high"> <!-- ⚡ Bolt: High priority for LCP logo -->
         </div>
 
         <div>
