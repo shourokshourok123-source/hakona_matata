@@ -11,3 +11,7 @@
 ## 2024-05-23 - DOM Parsing Bottleneck in Chat
 **Learning:** Using `innerHTML +=` for chat histories or long lists is a major performance anti-pattern. It forces the browser to re-parse the entire existing HTML string into a new DOM tree every time a single message is added, leading to O(N^2) complexity relative to the number of messages.
 **Action:** Always use `appendChild` with `createElement` and `textContent` for appending to live lists. This is O(1) per update and significantly more efficient as the list grows.
+
+## 2024-05-24 - Optimizing LCP and Resource Discovery
+**Learning:** For a static image-heavy site, LCP is heavily impacted by the late discovery of CSS-defined background images and the default priority the browser assigns to images. Applying `loading="lazy"` to above-the-fold content is a common anti-pattern that further delays LCP.
+**Action:** Use `<link rel="preload">` for critical CSS background images, apply `fetchpriority="high"` to hero images/logos, and ensure `loading="lazy"` is only used for off-screen content.
