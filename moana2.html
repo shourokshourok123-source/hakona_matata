@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://i.pinimg.com">
+    <link rel="preconnect" href="https://www.youtube.com">
+    <!-- Preload background image to optimize LCP -->
+    <link rel="preload" as="image" href="https://i.pinimg.com/1200x/61/6c/f5/616cf5e20feabda63af921774c755748.jpg">
     <title>MOANA 2 ^-^</title>
     <style>
         body{
@@ -61,8 +65,9 @@
     <div class="container">
         <h1>MOANA 2</h1>
         <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <img src="https://i.pinimg.com/736x/f6/5f/63/f65f638b92b8839a6541e30f5fe45e18.jpg" alt="moana 2" width="300">
-            <img src="https://i.pinimg.com/736x/f9/84/e2/f984e297a9458daccf0ee87ed78ec3fd.jpg" alt="moana 2" width="300">
+            <!-- fetchpriority="high" on primary poster to optimize LCP -->
+            <img src="https://i.pinimg.com/736x/f6/5f/63/f65f638b92b8839a6541e30f5fe45e18.jpg" alt="moana 2" width="300" fetchpriority="high">
+            <img src="https://i.pinimg.com/736x/f9/84/e2/f984e297a9458daccf0ee87ed78ec3fd.jpg" alt="moana 2" width="300" loading="lazy">
         </div>
 
         <div>
