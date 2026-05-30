@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Hakona Matata</title>
+    <!-- Resource hints for third-party images -->
+    <link rel="preconnect" href="https://i.pinimg.com">
+    <!-- Preload background image to improve LCP -->
+    <link rel="preload" as="image" href="https://i.pinimg.com/1200x/2e/0f/b0/2e0fb04b84529707a48ba49f81b76a13.jpg">
     <style>
         body{
             background-color: #f0f8ff;
@@ -41,7 +45,8 @@
         <p>Welcome to <strong>Hakona Matata</strong>, your magical gateway to the world of cartoons and anime! We believe that everyone deserves a little escape into a world of color, music, and adventure.</p>
         <p>Our site is designed for fans of all ages. Whether you're a parent looking for safe content for your kids, or a fan wanting to chat with your favorite characters, we've got you covered!</p>
         <p><strong>Designed with love by:</strong> hakona matata team^-^ "shorouk".</p>
-        <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" width="150" style="border-radius: 50%;" loading="lazy">
+        <!-- Primary image given high fetchpriority and lazy loading removed for above-the-fold asset -->
+        <img src="https://i.pinimg.com/736x/54/b6/26/54b626476b2aa260595be79bf7837eb6.jpg" width="150" style="border-radius: 50%;" fetchpriority="high">
     </div>
 </body>
 </html>
