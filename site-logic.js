@@ -2,6 +2,21 @@
 let currentCharacter = "";
 let charIntro = "";
 
+/**
+ * Character responses for the chat system.
+ * Optimization: Using a hash map for O(1) retrieval complexity instead of if-else chains.
+ */
+const characterResponses = {
+    "Mirabel": "I'm just doing my best to help the family! What do you think about our Casita?",
+    "Bruno": "The future is unpredictable, but I hope it's bright for you!",
+    "Moana": "The ocean is calling me! Do you like sailing too?",
+    "Maui": "You're welcome! I mean... what was your question again? I'm awesome, right?",
+    "Jinu": "Stay alert, the demons could be anywhere. Do you have your weapon ready?",
+    "Rumi": "Our music is our strength. Let's keep the rhythm going!",
+    "Chihiro": "Everything will be okay as long as I remember who I am. Have you seen my parents?",
+    "Haku": "Stay strong and don't look back. I will help you find your way home."
+};
+
 // Initialize Storage
 if (!localStorage.getItem('favorites')) localStorage.setItem('favorites', JSON.stringify([]));
 if (!localStorage.getItem('watchlist')) localStorage.setItem('watchlist', JSON.stringify([]));
@@ -105,22 +120,8 @@ function sendMessage() {
 
     // Fake response
     setTimeout(() => {
-        let response = "";
-        if (currentCharacter === 'Mirabel') {
-            response = "I'm just doing my best to help the family! What do you think about our Casita?";
-        } else if (currentCharacter === 'Bruno') {
-            response = "The future is unpredictable, but I hope it's bright for you!";
-        } else if (currentCharacter === 'Moana') {
-            response = "The ocean is calling me! Do you like sailing too?";
-        } else if (currentCharacter === 'Maui') {
-            response = "You're welcome! I mean... what was your question again? I'm awesome, right?";
-        } else if (currentCharacter === 'Jinu') {
-            response = "Stay alert, the demons could be anywhere. Do you have your weapon ready?";
-        } else if (currentCharacter === 'Rumi') {
-            response = "Our music is our strength. Let's keep the rhythm going!";
-        } else {
-            response = "That's very interesting! Tell me more.";
-        }
+        // Performance optimization: O(1) lookup using hash map instead of O(N) if-else chain
+        const response = characterResponses[currentCharacter] || "That's very interesting! Tell me more.";
 
         const botMsg = document.createElement('p');
         const botStrong = document.createElement('strong');
