@@ -2,6 +2,16 @@
 let currentCharacter = "";
 let charIntro = "";
 
+// Character responses for O(1) retrieval
+const characterResponses = {
+    'Mirabel': "I'm just doing my best to help the family! What do you think about our Casita?",
+    'Bruno': "The future is unpredictable, but I hope it's bright for you!",
+    'Moana': "The ocean is calling me! Do you like sailing too?",
+    'Maui': "You're welcome! I mean... what was your question again? I'm awesome, right?",
+    'Jinu': "Stay alert, the demons could be anywhere. Do you have your weapon ready?",
+    'Rumi': "Our music is our strength. Let's keep the rhythm going!"
+};
+
 // Initialize Storage
 if (!localStorage.getItem('favorites')) localStorage.setItem('favorites', JSON.stringify([]));
 if (!localStorage.getItem('watchlist')) localStorage.setItem('watchlist', JSON.stringify([]));
@@ -42,8 +52,17 @@ function postReview(title) {
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
     document.getElementById('review-text').value = "";
-    // Performance optimization: pass reviews directly to avoid re-reading from localStorage
-    displayReviews(title, reviews[title]);
+
+    // Performance optimization: append the new review directly for O(1) DOM update
+    // instead of calling displayReviews() which re-renders the entire list (O(n)).
+    const list = document.getElementById('reviews-list');
+    if (list) {
+        const div = document.createElement('div');
+        div.style.borderBottom = "1px solid white";
+        div.style.padding = "5px";
+        div.textContent = text;
+        list.appendChild(div);
+    }
 }
 
 /**
@@ -79,9 +98,17 @@ function startChat(name, intro) {
     currentCharacter = name;
     charIntro = intro;
     document.getElementById('chat-display').style.display = "block";
-    document.getElementById('chat-char-name').innerText = "Chat with " + name;
+    // Optimization: textContent is faster than innerText and avoids layout thrashing
+    document.getElementById('chat-char-name').textContent = "Chat with " + name;
     const history = document.getElementById('chat-history');
-    history.innerHTML = `<p><strong>${name}:</strong> ${intro}</p>`;
+    // Optimization: appendChild with textContent is more efficient and safer than innerHTML
+    history.textContent = "";
+    const p = document.createElement('p');
+    const strong = document.createElement('strong');
+    strong.textContent = name + ": ";
+    p.appendChild(strong);
+    p.appendChild(document.createTextNode(intro));
+    history.appendChild(p);
     document.getElementById('chat-input').focus();
 }
 
@@ -105,22 +132,8 @@ function sendMessage() {
 
     // Fake response
     setTimeout(() => {
-        let response = "";
-        if (currentCharacter === 'Mirabel') {
-            response = "I'm just doing my best to help the family! What do you think about our Casita?";
-        } else if (currentCharacter === 'Bruno') {
-            response = "The future is unpredictable, but I hope it's bright for you!";
-        } else if (currentCharacter === 'Moana') {
-            response = "The ocean is calling me! Do you like sailing too?";
-        } else if (currentCharacter === 'Maui') {
-            response = "You're welcome! I mean... what was your question again? I'm awesome, right?";
-        } else if (currentCharacter === 'Jinu') {
-            response = "Stay alert, the demons could be anywhere. Do you have your weapon ready?";
-        } else if (currentCharacter === 'Rumi') {
-            response = "Our music is our strength. Let's keep the rhythm going!";
-        } else {
-            response = "That's very interesting! Tell me more.";
-        }
+        // Optimization: Use O(1) hash map lookup instead of if-else chain
+        let response = characterResponses[currentCharacter] || "That's very interesting! Tell me more.";
 
         const botMsg = document.createElement('p');
         const botStrong = document.createElement('strong');

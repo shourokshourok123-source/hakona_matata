@@ -15,3 +15,7 @@
 ## 2025-05-24 - LCP and Resource Hint Optimization
 **Learning:** For static sites with CSS-driven background images, `preconnect` and `preload` are essential to prevent LCP delays. A critical anti-pattern discovered was applying `loading="lazy"` to elements that are likely to be the Largest Contentful Paint (LCP) candidate. This causes the browser to deprioritize the fetch until the layout is nearly complete, significantly hurting performance scores.
 **Action:** When preloading CSS background images, ensure the URL matches exactly. Always remove `loading="lazy"` and add `fetchpriority="high"` to above-the-fold hero images or background preloads.
+
+## 2024-06-06 - Tool Output Truncation in Large Logic Files
+**Learning:** In repositories with large monolithic logic files (like `site-logic.js` > 5KB), standard `read_file` or `cat` outputs may be truncated at 1000 characters. This can hide critical implementation details (e.g., `if-else` chains or data strings) leading to incorrect assumptions during planning.
+**Action:** Use `sed -n 'start,endp'` to read specific line ranges in small segments (20-30 lines) when exploring large files to ensure full visibility of the code before proposing optimizations.
