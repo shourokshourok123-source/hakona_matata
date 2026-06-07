@@ -2,6 +2,18 @@
 let currentCharacter = "";
 let charIntro = "";
 
+// Performance optimization: Hash map for O(1) character response lookups
+const characterResponses = {
+    'Mirabel': "I'm just doing my best to help the family! What do you think about our Casita?",
+    'Bruno': "The future is unpredictable, but I hope it's bright for you!",
+    'Moana': "The ocean is calling me! Do you like sailing too?",
+    'Maui': "You're welcome! I mean... what was your question again? I'm awesome, right?",
+    'Jinu': "Stay alert, the demons could be anywhere. Do you have your weapon ready?",
+    'Rumi': "Our music is our strength. Let's keep the rhythm going!",
+    'Chihiro': "I have to save my parents! Can you help me?",
+    'Haku': "Don't forget your name, Chihiro."
+};
+
 // Initialize Storage
 if (!localStorage.getItem('favorites')) localStorage.setItem('favorites', JSON.stringify([]));
 if (!localStorage.getItem('watchlist')) localStorage.setItem('watchlist', JSON.stringify([]));
@@ -33,6 +45,20 @@ function toggleWatchlist(title) {
     localStorage.setItem('watchlist', JSON.stringify(wl));
 }
 
+/**
+ * Creates a review element.
+ * Optimization: Uses textContent to prevent XSS and improve performance over innerHTML.
+ * @param {string} text - The review text.
+ * @returns {HTMLElement} The review element.
+ */
+function createReviewElement(text) {
+    const div = document.createElement('div');
+    div.style.borderBottom = "1px solid white";
+    div.style.padding = "5px";
+    div.textContent = text; // textContent is faster and safer than innerText/innerHTML
+    return div;
+}
+
 function postReview(title) {
     const text = document.getElementById('review-text').value;
     if (!text) return;
@@ -42,8 +68,13 @@ function postReview(title) {
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
     document.getElementById('review-text').value = "";
-    // Performance optimization: pass reviews directly to avoid re-reading from localStorage
-    displayReviews(title, reviews[title]);
+
+    // Performance optimization: Append the new review directly to the DOM in O(1)
+    // instead of re-rendering the entire list in O(N).
+    const list = document.getElementById('reviews-list');
+    if (list) {
+        list.appendChild(createReviewElement(text));
+    }
 }
 
 /**
@@ -64,11 +95,7 @@ function displayReviews(title, manualReviews) {
     const fragment = document.createDocumentFragment();
 
     reviews.forEach(r => {
-        const div = document.createElement('div');
-        div.style.borderBottom = "1px solid white";
-        div.style.padding = "5px";
-        div.textContent = r; // textContent is faster and safer than innerText/innerHTML
-        fragment.appendChild(div);
+        fragment.appendChild(createReviewElement(r));
     });
 
     list.appendChild(fragment);
@@ -105,22 +132,8 @@ function sendMessage() {
 
     // Fake response
     setTimeout(() => {
-        let response = "";
-        if (currentCharacter === 'Mirabel') {
-            response = "I'm just doing my best to help the family! What do you think about our Casita?";
-        } else if (currentCharacter === 'Bruno') {
-            response = "The future is unpredictable, but I hope it's bright for you!";
-        } else if (currentCharacter === 'Moana') {
-            response = "The ocean is calling me! Do you like sailing too?";
-        } else if (currentCharacter === 'Maui') {
-            response = "You're welcome! I mean... what was your question again? I'm awesome, right?";
-        } else if (currentCharacter === 'Jinu') {
-            response = "Stay alert, the demons could be anywhere. Do you have your weapon ready?";
-        } else if (currentCharacter === 'Rumi') {
-            response = "Our music is our strength. Let's keep the rhythm going!";
-        } else {
-            response = "That's very interesting! Tell me more.";
-        }
+        // Performance optimization: O(1) lookup using hash map
+        const response = characterResponses[currentCharacter] || "That's very interesting! Tell me more.";
 
         const botMsg = document.createElement('p');
         const botStrong = document.createElement('strong');
