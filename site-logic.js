@@ -2,6 +2,18 @@
 let currentCharacter = "";
 let charIntro = "";
 
+// Performance optimization: Global hash map for O(1) character response lookups
+const characterResponses = {
+    'Mirabel': "I'm just doing my best to help the family! What do you think about our Casita?",
+    'Bruno': "The future is unpredictable, but I hope it's bright for you!",
+    'Moana': "The ocean is calling me! Do you like sailing too?",
+    'Maui': "You're welcome! I mean... what was your question again? I'm awesome, right?",
+    'Jinu': "Stay alert, the demons could be anywhere. Do you have your weapon ready?",
+    'Rumi': "Our music is our strength. Let's keep the rhythm going!",
+    'Chihiro': "I have to save my parents! Can you help me?",
+    'Haku': "Don't forget your name, Chihiro."
+};
+
 // Initialize Storage
 if (!localStorage.getItem('favorites')) localStorage.setItem('favorites', JSON.stringify([]));
 if (!localStorage.getItem('watchlist')) localStorage.setItem('watchlist', JSON.stringify([]));
@@ -42,8 +54,26 @@ function postReview(title) {
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
     document.getElementById('review-text').value = "";
-    // Performance optimization: pass reviews directly to avoid re-reading from localStorage
-    displayReviews(title, reviews[title]);
+
+    // Performance optimization: Append only the new review in O(1) time instead of re-rendering everything
+    const list = document.getElementById('reviews-list');
+    if (list) {
+        list.appendChild(createReviewElement(text));
+    }
+}
+
+/**
+ * Helper to create a review DOM element.
+ * Performance optimization: Uses textContent to securely and efficiently create review elements.
+ * @param {string} text - The review text.
+ * @returns {HTMLElement} The created review element.
+ */
+function createReviewElement(text) {
+    const div = document.createElement('div');
+    div.style.borderBottom = "1px solid white";
+    div.style.padding = "5px";
+    div.textContent = text; // textContent is faster and safer than innerText/innerHTML
+    return div;
 }
 
 /**
@@ -64,11 +94,7 @@ function displayReviews(title, manualReviews) {
     const fragment = document.createDocumentFragment();
 
     reviews.forEach(r => {
-        const div = document.createElement('div');
-        div.style.borderBottom = "1px solid white";
-        div.style.padding = "5px";
-        div.textContent = r; // textContent is faster and safer than innerText/innerHTML
-        fragment.appendChild(div);
+        fragment.appendChild(createReviewElement(r));
     });
 
     list.appendChild(fragment);
@@ -79,9 +105,18 @@ function startChat(name, intro) {
     currentCharacter = name;
     charIntro = intro;
     document.getElementById('chat-display').style.display = "block";
-    document.getElementById('chat-char-name').innerText = "Chat with " + name;
+    document.getElementById('chat-char-name').textContent = "Chat with " + name;
     const history = document.getElementById('chat-history');
-    history.innerHTML = `<p><strong>${name}:</strong> ${intro}</p>`;
+
+    // Performance optimization: Use appendChild and textContent instead of innerHTML to avoid re-parsing
+    history.textContent = ""; // Clear history
+    const introMsg = document.createElement('p');
+    const introStrong = document.createElement('strong');
+    introStrong.textContent = name + ": ";
+    introMsg.appendChild(introStrong);
+    introMsg.appendChild(document.createTextNode(intro));
+    history.appendChild(introMsg);
+
     document.getElementById('chat-input').focus();
 }
 
@@ -105,22 +140,8 @@ function sendMessage() {
 
     // Fake response
     setTimeout(() => {
-        let response = "";
-        if (currentCharacter === 'Mirabel') {
-            response = "I'm just doing my best to help the family! What do you think about our Casita?";
-        } else if (currentCharacter === 'Bruno') {
-            response = "The future is unpredictable, but I hope it's bright for you!";
-        } else if (currentCharacter === 'Moana') {
-            response = "The ocean is calling me! Do you like sailing too?";
-        } else if (currentCharacter === 'Maui') {
-            response = "You're welcome! I mean... what was your question again? I'm awesome, right?";
-        } else if (currentCharacter === 'Jinu') {
-            response = "Stay alert, the demons could be anywhere. Do you have your weapon ready?";
-        } else if (currentCharacter === 'Rumi') {
-            response = "Our music is our strength. Let's keep the rhythm going!";
-        } else {
-            response = "That's very interesting! Tell me more.";
-        }
+        // Performance optimization: O(1) lookup in characterResponses hash map
+        const response = characterResponses[currentCharacter] || "That's very interesting! Tell me more.";
 
         const botMsg = document.createElement('p');
         const botStrong = document.createElement('strong');
