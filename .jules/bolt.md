@@ -15,3 +15,7 @@
 ## 2025-05-24 - LCP and Resource Hint Optimization
 **Learning:** For static sites with CSS-driven background images, `preconnect` and `preload` are essential to prevent LCP delays. A critical anti-pattern discovered was applying `loading="lazy"` to elements that are likely to be the Largest Contentful Paint (LCP) candidate. This causes the browser to deprioritize the fetch until the layout is nearly complete, significantly hurting performance scores.
 **Action:** When preloading CSS background images, ensure the URL matches exactly. Always remove `loading="lazy"` and add `fetchpriority="high"` to above-the-fold hero images or background preloads.
+
+## 2024-06-10 - O(1) DOM Updates and Lookup Optimization
+**Learning:** For features like reviews and chat that update frequently, re-rendering the entire list from localStorage or using complex if-else chains for responses creates unnecessary overhead. Using O(1) DOM appending and hash map lookups ensures the application remains responsive even as content grows.
+**Action:** Use helper functions like `createReviewElement` and `appendChatMessage` to encapsulate O(1) DOM logic and use global hash maps for conditional content retrieval.
