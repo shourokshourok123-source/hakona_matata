@@ -2,6 +2,21 @@
 let currentCharacter = "";
 let charIntro = "";
 
+/**
+ * Global hash map for O(1) character response retrieval.
+ * Includes all characters: Mirabel, Bruno, Moana, Maui, Jinu, Rumi, Chihiro, Haku.
+ */
+const characterResponses = {
+    'Mirabel': "I'm just doing my best to help the family! What do you think about our Casita?",
+    'Bruno': "The future is unpredictable, but I hope it's bright for you!",
+    'Moana': "The ocean is calling me! Do you like sailing too?",
+    'Maui': "You're welcome! I mean... what was your question again? I'm awesome, right?",
+    'Jinu': "Stay alert, the demons could be anywhere. Do you have your weapon ready?",
+    'Rumi': "Our music is our strength. Let's keep the rhythm going!",
+    'Chihiro': "I have to stay brave to save my parents. Have you ever been to a bathhouse?",
+    'Haku': "Remember your name, it's the key to your freedom. I'll help you as much as I can."
+};
+
 // Initialize Storage
 if (!localStorage.getItem('favorites')) localStorage.setItem('favorites', JSON.stringify([]));
 if (!localStorage.getItem('watchlist')) localStorage.setItem('watchlist', JSON.stringify([]));
@@ -33,6 +48,19 @@ function toggleWatchlist(title) {
     localStorage.setItem('watchlist', JSON.stringify(wl));
 }
 
+/**
+ * Helper function for secure and consistent review element creation.
+ * @param {string} text - The review text.
+ * @returns {HTMLElement} The created review div element.
+ */
+function createReviewElement(text) {
+    const div = document.createElement('div');
+    div.style.borderBottom = "1px solid white";
+    div.style.padding = "5px";
+    div.textContent = text; // textContent is faster and safer than innerText/innerHTML
+    return div;
+}
+
 function postReview(title) {
     const text = document.getElementById('review-text').value;
     if (!text) return;
@@ -42,8 +70,12 @@ function postReview(title) {
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
     document.getElementById('review-text').value = "";
-    // Performance optimization: pass reviews directly to avoid re-reading from localStorage
-    displayReviews(title, reviews[title]);
+
+    // Performance optimization: append directly to DOM (O(1)) instead of re-rendering everything (O(N))
+    const list = document.getElementById('reviews-list');
+    if (list) {
+        list.appendChild(createReviewElement(text));
+    }
 }
 
 /**
@@ -64,14 +96,26 @@ function displayReviews(title, manualReviews) {
     const fragment = document.createDocumentFragment();
 
     reviews.forEach(r => {
-        const div = document.createElement('div');
-        div.style.borderBottom = "1px solid white";
-        div.style.padding = "5px";
-        div.textContent = r; // textContent is faster and safer than innerText/innerHTML
-        fragment.appendChild(div);
+        fragment.appendChild(createReviewElement(r));
     });
 
     list.appendChild(fragment);
+}
+
+/**
+ * Helper function for secure and efficient O(1) chat message appending.
+ * @param {HTMLElement} historyElement - The chat history container.
+ * @param {string} sender - The sender name (e.g., 'You' or character name).
+ * @param {string} message - The message content.
+ */
+function appendChatMessage(historyElement, sender, message) {
+    const p = document.createElement('p');
+    const strong = document.createElement('strong');
+    strong.textContent = sender + ": ";
+    p.appendChild(strong);
+    p.appendChild(document.createTextNode(message));
+    historyElement.appendChild(p);
+    historyElement.scrollTop = historyElement.scrollHeight;
 }
 
 // Chat logic
@@ -81,7 +125,11 @@ function startChat(name, intro) {
     document.getElementById('chat-display').style.display = "block";
     document.getElementById('chat-char-name').innerText = "Chat with " + name;
     const history = document.getElementById('chat-history');
-    history.innerHTML = `<p><strong>${name}:</strong> ${intro}</p>`;
+
+    // Performance: Clear history and use helper for O(1) initial message
+    history.textContent = "";
+    appendChatMessage(history, name, intro);
+
     document.getElementById('chat-input').focus();
 }
 
@@ -92,45 +140,25 @@ function sendMessage() {
 
     const history = document.getElementById('chat-history');
 
-    // Performance optimization: Use appendChild instead of innerHTML += to avoid re-parsing the entire chat history
-    const userMsg = document.createElement('p');
-    const userStrong = document.createElement('strong');
-    userStrong.textContent = "You: ";
-    userMsg.appendChild(userStrong);
-    userMsg.appendChild(document.createTextNode(msg));
-    history.appendChild(userMsg);
-
+    // Performance: O(1) DOM update via helper
+    appendChatMessage(history, "You", msg);
     input.value = "";
-    history.scrollTop = history.scrollHeight;
 
-    // Fake response
+    // Fake response using O(1) lookup hash map
     setTimeout(() => {
-        let response = "";
-        if (currentCharacter === 'Mirabel') {
-            response = "I'm just doing my best to help the family! What do you think about our Casita?";
-        } else if (currentCharacter === 'Bruno') {
-            response = "The future is unpredictable, but I hope it's bright for you!";
-        } else if (currentCharacter === 'Moana') {
-            response = "The ocean is calling me! Do you like sailing too?";
-        } else if (currentCharacter === 'Maui') {
-            response = "You're welcome! I mean... what was your question again? I'm awesome, right?";
-        } else if (currentCharacter === 'Jinu') {
-            response = "Stay alert, the demons could be anywhere. Do you have your weapon ready?";
-        } else if (currentCharacter === 'Rumi') {
-            response = "Our music is our strength. Let's keep the rhythm going!";
-        } else {
-            response = "That's very interesting! Tell me more.";
-        }
-
-        const botMsg = document.createElement('p');
-        const botStrong = document.createElement('strong');
-        botStrong.textContent = currentCharacter + ": ";
-        botMsg.appendChild(botStrong);
-        botMsg.appendChild(document.createTextNode(response));
-        history.appendChild(botMsg);
-
-        history.scrollTop = history.scrollHeight;
+        const response = characterResponses[currentCharacter] || "That's very interesting! Tell me more.";
+        appendChatMessage(history, currentCharacter, response);
     }, 1000);
+}
+
+/**
+ * Handles Enter key press in the chat input.
+ * @param {KeyboardEvent} event - The keyboard event.
+ */
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
 }
 
 // Load reviews on DOMContentLoaded instead of window.load
@@ -143,5 +171,12 @@ window.addEventListener('DOMContentLoaded', function() {
         let page = filename.toUpperCase().replace(/_/g, " ");
         if (page === "MOANA2") page = "MOANA 2";
         displayReviews(page);
+    }
+
+    // Attach Enter key listener to chat input if it exists
+    const chatInput = document.getElementById('chat-input');
+    if (chatInput && !chatInput.dataset.listenerAdded) {
+        chatInput.addEventListener('keydown', handleKeyPress);
+        chatInput.dataset.listenerAdded = 'true';
     }
 });
