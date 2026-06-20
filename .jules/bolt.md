@@ -15,3 +15,7 @@
 ## 2025-05-24 - LCP and Resource Hint Optimization
 **Learning:** For static sites with CSS-driven background images, `preconnect` and `preload` are essential to prevent LCP delays. A critical anti-pattern discovered was applying `loading="lazy"` to elements that are likely to be the Largest Contentful Paint (LCP) candidate. This causes the browser to deprioritize the fetch until the layout is nearly complete, significantly hurting performance scores.
 **Action:** When preloading CSS background images, ensure the URL matches exactly. Always remove `loading="lazy"` and add `fetchpriority="high"` to above-the-fold hero images or background preloads.
+
+## 2026-06-20 - Scalable Chat Logic with Hash Maps
+**Learning:** Refactoring $O(N)$ conditional logic (like `if-else` chains for character responses) into $O(1)$ hash maps significantly improves scalability. It also highlights gaps where the UI (HTML) might have more features than the logic (JS), making it easier to ensure feature parity while optimizing.
+**Action:** Always prefer hash map lookups for content-heavy conditional logic to maintain $O(1)$ performance and improve code maintainability.

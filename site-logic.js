@@ -75,13 +75,45 @@ function displayReviews(title, manualReviews) {
 }
 
 // Chat logic
+const characterResponses = {
+    'Mirabel': "I'm just doing my best to help the family! What do you think about our Casita?",
+    'Bruno': "The future is unpredictable, but I hope it's bright for you!",
+    'Moana': "The ocean is calling me! Do you like sailing too?",
+    'Maui': "You're welcome! I mean... what was your question again? I'm awesome, right?",
+    'Jinu': "Stay alert, the demons could be anywhere. Do you have your weapon ready?",
+    'Rumi': "Our music is our strength. Let's keep the rhythm going!",
+    'Chihiro': "Everything is so strange here, but I must stay brave to save my parents.",
+    'Haku': "Remember who you are. Don't let them take your name away."
+};
+
+/**
+ * Appends a message to the chat history.
+ * Optimization: Uses appendChild and textContent for O(1) DOM updates, avoiding expensive innerHTML re-parsing.
+ * @param {HTMLElement} container - The chat history container.
+ * @param {string} sender - The name of the sender.
+ * @param {string} message - The message text.
+ */
+function appendChatMessage(container, sender, message) {
+    const p = document.createElement('p');
+    const strong = document.createElement('strong');
+    strong.textContent = sender + ": ";
+    p.appendChild(strong);
+    p.appendChild(document.createTextNode(message));
+    container.appendChild(p);
+    container.scrollTop = container.scrollHeight;
+}
+
 function startChat(name, intro) {
     currentCharacter = name;
     charIntro = intro;
     document.getElementById('chat-display').style.display = "block";
-    document.getElementById('chat-char-name').innerText = "Chat with " + name;
+    document.getElementById('chat-char-name').textContent = "Chat with " + name;
     const history = document.getElementById('chat-history');
-    history.innerHTML = `<p><strong>${name}:</strong> ${intro}</p>`;
+
+    // Clear history and append intro using optimized helper
+    history.textContent = "";
+    appendChatMessage(history, name, intro);
+
     document.getElementById('chat-input').focus();
 }
 
@@ -92,44 +124,16 @@ function sendMessage() {
 
     const history = document.getElementById('chat-history');
 
-    // Performance optimization: Use appendChild instead of innerHTML += to avoid re-parsing the entire chat history
-    const userMsg = document.createElement('p');
-    const userStrong = document.createElement('strong');
-    userStrong.textContent = "You: ";
-    userMsg.appendChild(userStrong);
-    userMsg.appendChild(document.createTextNode(msg));
-    history.appendChild(userMsg);
+    // Performance optimization: Use shared O(1) helper instead of manual element creation or innerHTML
+    appendChatMessage(history, "You", msg);
 
     input.value = "";
-    history.scrollTop = history.scrollHeight;
 
     // Fake response
     setTimeout(() => {
-        let response = "";
-        if (currentCharacter === 'Mirabel') {
-            response = "I'm just doing my best to help the family! What do you think about our Casita?";
-        } else if (currentCharacter === 'Bruno') {
-            response = "The future is unpredictable, but I hope it's bright for you!";
-        } else if (currentCharacter === 'Moana') {
-            response = "The ocean is calling me! Do you like sailing too?";
-        } else if (currentCharacter === 'Maui') {
-            response = "You're welcome! I mean... what was your question again? I'm awesome, right?";
-        } else if (currentCharacter === 'Jinu') {
-            response = "Stay alert, the demons could be anywhere. Do you have your weapon ready?";
-        } else if (currentCharacter === 'Rumi') {
-            response = "Our music is our strength. Let's keep the rhythm going!";
-        } else {
-            response = "That's very interesting! Tell me more.";
-        }
-
-        const botMsg = document.createElement('p');
-        const botStrong = document.createElement('strong');
-        botStrong.textContent = currentCharacter + ": ";
-        botMsg.appendChild(botStrong);
-        botMsg.appendChild(document.createTextNode(response));
-        history.appendChild(botMsg);
-
-        history.scrollTop = history.scrollHeight;
+        // Performance optimization: O(1) hash map lookup instead of O(N) if-else chain
+        const response = characterResponses[currentCharacter] || "That's very interesting! Tell me more.";
+        appendChatMessage(history, currentCharacter, response);
     }, 1000);
 }
 
