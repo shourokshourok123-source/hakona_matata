@@ -33,17 +33,36 @@ function toggleWatchlist(title) {
     localStorage.setItem('watchlist', JSON.stringify(wl));
 }
 
+/**
+ * Appends a single review item to a container.
+ * Optimization: Uses createElement and textContent for O(1) DOM updates.
+ * @param {HTMLElement} container - The container to append to.
+ * @param {string} text - The review text.
+ */
+function appendReviewItem(container, text) {
+    const div = document.createElement('div');
+    div.style.borderBottom = "1px solid white";
+    div.style.padding = "5px";
+    div.textContent = text; // textContent is faster and safer than innerText/innerHTML
+    container.appendChild(div);
+}
+
 function postReview(title) {
-    const text = document.getElementById('review-text').value;
+    const textInput = document.getElementById('review-text');
+    const text = textInput.value;
     if (!text) return;
     title = title.toUpperCase();
     let reviews = JSON.parse(localStorage.getItem('reviews'));
     if (!reviews[title]) reviews[title] = [];
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
-    document.getElementById('review-text').value = "";
-    // Performance optimization: pass reviews directly to avoid re-reading from localStorage
-    displayReviews(title, reviews[title]);
+    textInput.value = "";
+
+    // Performance optimization: Append directly to the list for O(1) update instead of full re-render
+    const list = document.getElementById('reviews-list');
+    if (list) {
+        appendReviewItem(list, text);
+    }
 }
 
 /**
@@ -64,11 +83,7 @@ function displayReviews(title, manualReviews) {
     const fragment = document.createDocumentFragment();
 
     reviews.forEach(r => {
-        const div = document.createElement('div');
-        div.style.borderBottom = "1px solid white";
-        div.style.padding = "5px";
-        div.textContent = r; // textContent is faster and safer than innerText/innerHTML
-        fragment.appendChild(div);
+        appendReviewItem(fragment, r);
     });
 
     list.appendChild(fragment);
