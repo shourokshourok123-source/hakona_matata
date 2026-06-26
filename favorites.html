@@ -49,7 +49,10 @@
             const display = document.getElementById('favorites-display');
 
             if (!favs.length) {
-                display.innerHTML = "<p>No favorites yet!</p>";
+                const p = document.createElement('p');
+                p.textContent = "No favorites yet!";
+                display.textContent = "";
+                display.appendChild(p);
                 return;
             }
 
