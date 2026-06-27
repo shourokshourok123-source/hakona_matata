@@ -2,13 +2,11 @@
 let currentCharacter = "";
 let charIntro = "";
 
-// Initialize Storage
-if (!localStorage.getItem('favorites')) localStorage.setItem('favorites', JSON.stringify([]));
-if (!localStorage.getItem('watchlist')) localStorage.setItem('watchlist', JSON.stringify([]));
-if (!localStorage.getItem('reviews')) localStorage.setItem('reviews', JSON.stringify({}));
+// Storage initialization removed from global scope to avoid redundant writes.
+// Logic moved to getter-style calls within functions.
 
 function toggleFavorite(title) {
-    let favs = JSON.parse(localStorage.getItem('favorites'));
+    let favs = JSON.parse(localStorage.getItem('favorites')) || [];
     title = title.toUpperCase();
     if (favs.includes(title)) {
         favs = favs.filter(t => t !== title);
@@ -21,7 +19,7 @@ function toggleFavorite(title) {
 }
 
 function toggleWatchlist(title) {
-    let wl = JSON.parse(localStorage.getItem('watchlist'));
+    let wl = JSON.parse(localStorage.getItem('watchlist')) || [];
     title = title.toUpperCase();
     if (wl.includes(title)) {
         wl = wl.filter(t => t !== title);
@@ -33,17 +31,38 @@ function toggleWatchlist(title) {
     localStorage.setItem('watchlist', JSON.stringify(wl));
 }
 
+/**
+ * Appends a single review item to the container.
+ * Optimization: Performs surgical O(1) DOM update.
+ * @param {HTMLElement} container - The container to append to.
+ * @param {string} text - The review text.
+ */
+function appendReviewItem(container, text) {
+    const div = document.createElement('div');
+    div.style.borderBottom = "1px solid white";
+    div.style.padding = "5px";
+    div.textContent = text; // textContent is faster and safer than innerText/innerHTML
+    container.appendChild(div);
+}
+
 function postReview(title) {
-    const text = document.getElementById('review-text').value;
+    const textInput = document.getElementById('review-text');
+    const text = textInput.value;
     if (!text) return;
+
     title = title.toUpperCase();
-    let reviews = JSON.parse(localStorage.getItem('reviews'));
+    let reviews = JSON.parse(localStorage.getItem('reviews')) || {};
     if (!reviews[title]) reviews[title] = [];
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
-    document.getElementById('review-text').value = "";
-    // Performance optimization: pass reviews directly to avoid re-reading from localStorage
-    displayReviews(title, reviews[title]);
+
+    textInput.value = "";
+
+    // Performance optimization: Surgical update instead of full re-render
+    const list = document.getElementById('reviews-list');
+    if (list) {
+        appendReviewItem(list, text);
+    }
 }
 
 /**
@@ -57,18 +76,15 @@ function displayReviews(title, manualReviews) {
     if (!list) return;
 
     title = title.toUpperCase();
-    const reviews = manualReviews || (JSON.parse(localStorage.getItem('reviews'))[title] || []);
+    const allReviews = JSON.parse(localStorage.getItem('reviews')) || {};
+    const reviews = manualReviews || (allReviews[title] || []);
 
-    // Clear list and use fragment for efficient DOM updates
+    // Clear list and use fragment for efficient batch DOM updates
     list.textContent = "";
     const fragment = document.createDocumentFragment();
 
     reviews.forEach(r => {
-        const div = document.createElement('div');
-        div.style.borderBottom = "1px solid white";
-        div.style.padding = "5px";
-        div.textContent = r; // textContent is faster and safer than innerText/innerHTML
-        fragment.appendChild(div);
+        appendReviewItem(fragment, r);
     });
 
     list.appendChild(fragment);
