@@ -42,8 +42,27 @@ function postReview(title) {
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
     document.getElementById('review-text').value = "";
-    // Performance optimization: pass reviews directly to avoid re-reading from localStorage
-    displayReviews(title, reviews[title]);
+
+    // Performance optimization: Surgical DOM update instead of full re-render
+    // This reduces the complexity from O(N) to O(1) for adding a new review.
+    const list = document.getElementById('reviews-list');
+    if (list) {
+        appendReviewItem(list, text);
+    }
+}
+
+/**
+ * Appends a single review item to the container.
+ * Optimization: Uses textContent and appendChild for O(1) DOM updates.
+ * @param {HTMLElement|DocumentFragment} container - The reviews list element or fragment.
+ * @param {string} text - The review text.
+ */
+function appendReviewItem(container, text) {
+    const div = document.createElement('div');
+    div.style.borderBottom = "1px solid white";
+    div.style.padding = "5px";
+    div.textContent = text; // textContent is faster and safer than innerText/innerHTML
+    container.appendChild(div);
 }
 
 /**
@@ -59,16 +78,12 @@ function displayReviews(title, manualReviews) {
     title = title.toUpperCase();
     const reviews = manualReviews || (JSON.parse(localStorage.getItem('reviews'))[title] || []);
 
-    // Clear list and use fragment for efficient DOM updates
+    // Clear list and use fragment for efficient batch DOM updates
     list.textContent = "";
     const fragment = document.createDocumentFragment();
 
     reviews.forEach(r => {
-        const div = document.createElement('div');
-        div.style.borderBottom = "1px solid white";
-        div.style.padding = "5px";
-        div.textContent = r; // textContent is faster and safer than innerText/innerHTML
-        fragment.appendChild(div);
+        appendReviewItem(fragment, r);
     });
 
     list.appendChild(fragment);
