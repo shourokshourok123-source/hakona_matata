@@ -15,3 +15,7 @@
 ## 2025-05-24 - LCP and Resource Hint Optimization
 **Learning:** For static sites with CSS-driven background images, `preconnect` and `preload` are essential to prevent LCP delays. A critical anti-pattern discovered was applying `loading="lazy"` to elements that are likely to be the Largest Contentful Paint (LCP) candidate. This causes the browser to deprioritize the fetch until the layout is nearly complete, significantly hurting performance scores.
 **Action:** When preloading CSS background images, ensure the URL matches exactly. Always remove `loading="lazy"` and add `fetchpriority="high"` to above-the-fold hero images or background preloads.
+
+## 2024-05-26 - Lazy LocalStorage Initialization
+**Learning:** Top-level `localStorage` initialization (setting defaults on every page load) is a performance anti-pattern. It triggers unnecessary disk writes even on pages that don't use the stored data. Moving default handling into the getter functions (lazy initialization) saves cycles during the critical path of the initial load.
+**Action:** Use robust defaults like `JSON.parse(localStorage.getItem('key')) || []` directly in logic functions instead of pre-initializing storage on `DOMContentLoaded`.
