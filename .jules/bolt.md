@@ -15,3 +15,7 @@
 ## 2025-05-24 - LCP and Resource Hint Optimization
 **Learning:** For static sites with CSS-driven background images, `preconnect` and `preload` are essential to prevent LCP delays. A critical anti-pattern discovered was applying `loading="lazy"` to elements that are likely to be the Largest Contentful Paint (LCP) candidate. This causes the browser to deprioritize the fetch until the layout is nearly complete, significantly hurting performance scores.
 **Action:** When preloading CSS background images, ensure the URL matches exactly. Always remove `loading="lazy"` and add `fetchpriority="high"` to above-the-fold hero images or background preloads.
+
+## 2025-06-05 - Surgical DOM Updates and Lazy Storage
+**Learning:** Frequent `localStorage` writes on every page load (even those without interactivity) and O(N) DOM re-renders are common performance drains in vanilla JS apps. Using `innerHTML = ""` followed by a loop to re-render lists is O(N). Implementing surgical `appendChild` updates provides O(1) performance for new items. Also, `document.getElementById` is fast, but a simple memoized cache (`domCache`) prevents thousands of redundant lookups in long-running sessions or high-frequency updates.
+**Action:** Implement lazy storage initialization and use `append...` helper functions for O(1) list updates. Use a DOM cache for frequently accessed elements.
