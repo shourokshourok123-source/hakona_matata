@@ -33,17 +33,35 @@ function toggleWatchlist(title) {
     localStorage.setItem('watchlist', JSON.stringify(wl));
 }
 
+/**
+ * Appends a single review item to the list.
+ * Optimization: Performs O(1) surgical DOM update.
+ * @param {HTMLElement} container - The reviews list element.
+ * @param {string} text - The review text.
+ */
+function appendReviewItem(container, text) {
+    const div = document.createElement('div');
+    div.style.borderBottom = "1px solid white";
+    div.style.padding = "5px";
+    div.textContent = text; // textContent is faster and safer than innerText/innerHTML
+    container.appendChild(div);
+}
+
 function postReview(title) {
+    const list = document.getElementById('reviews-list');
     const text = document.getElementById('review-text').value;
-    if (!text) return;
+    if (!text || !list) return;
+
     title = title.toUpperCase();
-    let reviews = JSON.parse(localStorage.getItem('reviews'));
+    // Defensive check: ensure reviews object exists even if localStorage initialization was skipped
+    let reviews = JSON.parse(localStorage.getItem('reviews')) || {};
     if (!reviews[title]) reviews[title] = [];
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
     document.getElementById('review-text').value = "";
-    // Performance optimization: pass reviews directly to avoid re-reading from localStorage
-    displayReviews(title, reviews[title]);
+
+    // Performance optimization: Use O(1) surgical DOM update instead of full O(N) re-render
+    appendReviewItem(list, text);
 }
 
 /**
@@ -57,18 +75,17 @@ function displayReviews(title, manualReviews) {
     if (!list) return;
 
     title = title.toUpperCase();
-    const reviews = manualReviews || (JSON.parse(localStorage.getItem('reviews'))[title] || []);
+    // Defensive check: ensure reviews object exists even if localStorage initialization was skipped
+    const storedReviews = JSON.parse(localStorage.getItem('reviews')) || {};
+    const reviews = manualReviews || (storedReviews[title] || []);
 
-    // Clear list and use fragment for efficient DOM updates
+    // Clear list and use fragment for efficient DOM updates during initial load
     list.textContent = "";
     const fragment = document.createDocumentFragment();
 
     reviews.forEach(r => {
-        const div = document.createElement('div');
-        div.style.borderBottom = "1px solid white";
-        div.style.padding = "5px";
-        div.textContent = r; // textContent is faster and safer than innerText/innerHTML
-        fragment.appendChild(div);
+        // Reuse appendReviewItem for consistency, but append to fragment for performance
+        appendReviewItem(fragment, r);
     });
 
     list.appendChild(fragment);
@@ -137,6 +154,9 @@ function sendMessage() {
 // Load reviews on DOMContentLoaded instead of window.load
 // This improves perceived performance as we don't wait for images/iframes
 window.addEventListener('DOMContentLoaded', function() {
+    // Optimization: Early exit if reviews list is not present to avoid unnecessary processing
+    if (!document.getElementById('reviews-list')) return;
+
     const path = window.location.pathname;
     const filename = path.split("/").pop().split(".")[0];
     if (filename) {
