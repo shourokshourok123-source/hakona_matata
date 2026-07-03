@@ -15,3 +15,7 @@
 ## 2025-05-24 - LCP and Resource Hint Optimization
 **Learning:** For static sites with CSS-driven background images, `preconnect` and `preload` are essential to prevent LCP delays. A critical anti-pattern discovered was applying `loading="lazy"` to elements that are likely to be the Largest Contentful Paint (LCP) candidate. This causes the browser to deprioritize the fetch until the layout is nearly complete, significantly hurting performance scores.
 **Action:** When preloading CSS background images, ensure the URL matches exactly. Always remove `loading="lazy"` and add `fetchpriority="high"` to above-the-fold hero images or background preloads.
+
+## 2024-05-26 - O(1) List Updates and Early Exit
+**Learning:** Re-rendering an entire list (O(N)) on every update is a common bottleneck that scales poorly. Surgical DOM updates (O(1)) using helper functions significantly improve responsiveness. Additionally, performing DOM-dependent logic (like path parsing for reviews) on pages where the target element doesn't exist is wasted work that can be avoided with a simple early exit.
+**Action:** Use helper functions for surgical list updates and always check for the existence of target elements before executing page-specific initialization logic.

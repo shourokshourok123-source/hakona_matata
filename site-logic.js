@@ -33,6 +33,20 @@ function toggleWatchlist(title) {
     localStorage.setItem('watchlist', JSON.stringify(wl));
 }
 
+/**
+ * Appends a single review item to the container.
+ * Optimization: Performs surgical O(1) DOM update.
+ * @param {HTMLElement|DocumentFragment} container - The reviews list element or fragment.
+ * @param {string} text - The review content.
+ */
+function appendReviewItem(container, text) {
+    const div = document.createElement('div');
+    div.style.borderBottom = "1px solid white";
+    div.style.padding = "5px";
+    div.textContent = text;
+    container.appendChild(div);
+}
+
 function postReview(title) {
     const text = document.getElementById('review-text').value;
     if (!text) return;
@@ -42,8 +56,10 @@ function postReview(title) {
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
     document.getElementById('review-text').value = "";
-    // Performance optimization: pass reviews directly to avoid re-reading from localStorage
-    displayReviews(title, reviews[title]);
+
+    // Performance optimization: Surgical O(1) DOM update instead of full list re-render
+    const list = document.getElementById('reviews-list');
+    if (list) appendReviewItem(list, text);
 }
 
 /**
@@ -64,11 +80,7 @@ function displayReviews(title, manualReviews) {
     const fragment = document.createDocumentFragment();
 
     reviews.forEach(r => {
-        const div = document.createElement('div');
-        div.style.borderBottom = "1px solid white";
-        div.style.padding = "5px";
-        div.textContent = r; // textContent is faster and safer than innerText/innerHTML
-        fragment.appendChild(div);
+        appendReviewItem(fragment, r);
     });
 
     list.appendChild(fragment);
@@ -137,6 +149,9 @@ function sendMessage() {
 // Load reviews on DOMContentLoaded instead of window.load
 // This improves perceived performance as we don't wait for images/iframes
 window.addEventListener('DOMContentLoaded', function() {
+    // Optimization: Early exit if no reviews list exists on the page
+    if (!document.getElementById('reviews-list')) return;
+
     const path = window.location.pathname;
     const filename = path.split("/").pop().split(".")[0];
     if (filename) {
