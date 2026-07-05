@@ -2,13 +2,12 @@
 let currentCharacter = "";
 let charIntro = "";
 
-// Initialize Storage
-if (!localStorage.getItem('favorites')) localStorage.setItem('favorites', JSON.stringify([]));
-if (!localStorage.getItem('watchlist')) localStorage.setItem('watchlist', JSON.stringify([]));
-if (!localStorage.getItem('reviews')) localStorage.setItem('reviews', JSON.stringify({}));
-
+/**
+ * Toggles a movie in the user's favorites list.
+ * Optimization: Uses defensive null checks to avoid eager localStorage initialization on every page load.
+ */
 function toggleFavorite(title) {
-    let favs = JSON.parse(localStorage.getItem('favorites'));
+    let favs = JSON.parse(localStorage.getItem('favorites') || '[]');
     title = title.toUpperCase();
     if (favs.includes(title)) {
         favs = favs.filter(t => t !== title);
@@ -20,8 +19,12 @@ function toggleFavorite(title) {
     localStorage.setItem('favorites', JSON.stringify(favs));
 }
 
+/**
+ * Toggles a movie in the user's watchlist.
+ * Optimization: Uses defensive null checks to avoid eager localStorage initialization.
+ */
 function toggleWatchlist(title) {
-    let wl = JSON.parse(localStorage.getItem('watchlist'));
+    let wl = JSON.parse(localStorage.getItem('watchlist') || '[]');
     title = title.toUpperCase();
     if (wl.includes(title)) {
         wl = wl.filter(t => t !== title);
@@ -33,11 +36,15 @@ function toggleWatchlist(title) {
     localStorage.setItem('watchlist', JSON.stringify(wl));
 }
 
+/**
+ * Posts a new review for a movie.
+ * Optimization: Uses defensive null checks to avoid eager localStorage initialization.
+ */
 function postReview(title) {
     const text = document.getElementById('review-text').value;
     if (!text) return;
     title = title.toUpperCase();
-    let reviews = JSON.parse(localStorage.getItem('reviews'));
+    let reviews = JSON.parse(localStorage.getItem('reviews') || '{}');
     if (!reviews[title]) reviews[title] = [];
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
@@ -57,7 +64,7 @@ function displayReviews(title, manualReviews) {
     if (!list) return;
 
     title = title.toUpperCase();
-    const reviews = manualReviews || (JSON.parse(localStorage.getItem('reviews'))[title] || []);
+    const reviews = manualReviews || (JSON.parse(localStorage.getItem('reviews') || '{}')[title] || []);
 
     // Clear list and use fragment for efficient DOM updates
     list.textContent = "";
@@ -137,6 +144,9 @@ function sendMessage() {
 // Load reviews on DOMContentLoaded instead of window.load
 // This improves perceived performance as we don't wait for images/iframes
 window.addEventListener('DOMContentLoaded', function() {
+    // Optimization: Early exit if reviews-list is not present to avoid unnecessary processing on non-movie pages
+    if (!document.getElementById('reviews-list')) return;
+
     const path = window.location.pathname;
     const filename = path.split("/").pop().split(".")[0];
     if (filename) {
