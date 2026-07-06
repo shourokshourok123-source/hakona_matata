@@ -2,13 +2,14 @@
 let currentCharacter = "";
 let charIntro = "";
 
-// Initialize Storage
-if (!localStorage.getItem('favorites')) localStorage.setItem('favorites', JSON.stringify([]));
-if (!localStorage.getItem('watchlist')) localStorage.setItem('watchlist', JSON.stringify([]));
-if (!localStorage.getItem('reviews')) localStorage.setItem('reviews', JSON.stringify({}));
-
+/**
+ * Toggles a movie in the favorites list.
+ * Optimization: Uses lazy initialization with defensive null checks to avoid redundant top-level localStorage writes.
+ * @param {string} title - The title of the movie.
+ */
 function toggleFavorite(title) {
-    let favs = JSON.parse(localStorage.getItem('favorites'));
+    // Lazy initialization: fallback to empty array if 'favorites' doesn't exist
+    let favs = JSON.parse(localStorage.getItem('favorites') || '[]');
     title = title.toUpperCase();
     if (favs.includes(title)) {
         favs = favs.filter(t => t !== title);
@@ -20,8 +21,14 @@ function toggleFavorite(title) {
     localStorage.setItem('favorites', JSON.stringify(favs));
 }
 
+/**
+ * Toggles a movie in the watchlist.
+ * Optimization: Uses lazy initialization with defensive null checks to avoid redundant top-level localStorage writes.
+ * @param {string} title - The title of the movie.
+ */
 function toggleWatchlist(title) {
-    let wl = JSON.parse(localStorage.getItem('watchlist'));
+    // Lazy initialization: fallback to empty array if 'watchlist' doesn't exist
+    let wl = JSON.parse(localStorage.getItem('watchlist') || '[]');
     title = title.toUpperCase();
     if (wl.includes(title)) {
         wl = wl.filter(t => t !== title);
@@ -33,11 +40,17 @@ function toggleWatchlist(title) {
     localStorage.setItem('watchlist', JSON.stringify(wl));
 }
 
+/**
+ * Posts a review for a movie.
+ * Optimization: Uses lazy initialization for reviews and passes data directly to displayReviews.
+ * @param {string} title - The title of the movie.
+ */
 function postReview(title) {
     const text = document.getElementById('review-text').value;
     if (!text) return;
     title = title.toUpperCase();
-    let reviews = JSON.parse(localStorage.getItem('reviews'));
+    // Lazy initialization: fallback to empty object if 'reviews' doesn't exist
+    let reviews = JSON.parse(localStorage.getItem('reviews') || '{}');
     if (!reviews[title]) reviews[title] = [];
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
@@ -57,7 +70,8 @@ function displayReviews(title, manualReviews) {
     if (!list) return;
 
     title = title.toUpperCase();
-    const reviews = manualReviews || (JSON.parse(localStorage.getItem('reviews'))[title] || []);
+    // Optimization: Lazy read with fallback to empty object
+    const reviews = manualReviews || (JSON.parse(localStorage.getItem('reviews') || '{}')[title] || []);
 
     // Clear list and use fragment for efficient DOM updates
     list.textContent = "";
@@ -137,6 +151,9 @@ function sendMessage() {
 // Load reviews on DOMContentLoaded instead of window.load
 // This improves perceived performance as we don't wait for images/iframes
 window.addEventListener('DOMContentLoaded', function() {
+    // Performance optimization: Early exit if the reviews list is not present on the page
+    if (!document.getElementById('reviews-list')) return;
+
     const path = window.location.pathname;
     const filename = path.split("/").pop().split(".")[0];
     if (filename) {
