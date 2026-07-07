@@ -1,14 +1,14 @@
-
 let currentCharacter = "";
 let charIntro = "";
+let chatHistoryElement = null;
+let chatInputElement = null;
 
-// Initialize Storage
-if (!localStorage.getItem('favorites')) localStorage.setItem('favorites', JSON.stringify([]));
-if (!localStorage.getItem('watchlist')) localStorage.setItem('watchlist', JSON.stringify([]));
-if (!localStorage.getItem('reviews')) localStorage.setItem('reviews', JSON.stringify({}));
-
+/**
+ * Toggles a title in Favorites.
+ * Optimization: Uses lazy initialization for localStorage to avoid redundant writes on page load.
+ */
 function toggleFavorite(title) {
-    let favs = JSON.parse(localStorage.getItem('favorites'));
+    let favs = JSON.parse(localStorage.getItem('favorites') || '[]');
     title = title.toUpperCase();
     if (favs.includes(title)) {
         favs = favs.filter(t => t !== title);
@@ -20,8 +20,12 @@ function toggleFavorite(title) {
     localStorage.setItem('favorites', JSON.stringify(favs));
 }
 
+/**
+ * Toggles a title in Watchlist.
+ * Optimization: Uses lazy initialization for localStorage to avoid redundant writes on page load.
+ */
 function toggleWatchlist(title) {
-    let wl = JSON.parse(localStorage.getItem('watchlist'));
+    let wl = JSON.parse(localStorage.getItem('watchlist') || '[]');
     title = title.toUpperCase();
     if (wl.includes(title)) {
         wl = wl.filter(t => t !== title);
@@ -33,22 +37,26 @@ function toggleWatchlist(title) {
     localStorage.setItem('watchlist', JSON.stringify(wl));
 }
 
+/**
+ * Posts a review for a given title.
+ * Optimization: Lazy loads storage and passes it directly to displayReviews to avoid redundant I/O.
+ */
 function postReview(title) {
-    const text = document.getElementById('review-text').value;
+    const input = document.getElementById('review-text');
+    const text = input.value;
     if (!text) return;
     title = title.toUpperCase();
-    let reviews = JSON.parse(localStorage.getItem('reviews'));
+    let reviews = JSON.parse(localStorage.getItem('reviews') || '{}');
     if (!reviews[title]) reviews[title] = [];
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
-    document.getElementById('review-text').value = "";
-    // Performance optimization: pass reviews directly to avoid re-reading from localStorage
+    input.value = "";
     displayReviews(title, reviews[title]);
 }
 
 /**
  * Renders reviews for a given title.
- * Optimization: Uses DocumentFragment and textContent to minimize layout thrashing and prevent XSS.
+ * Optimization: Uses DocumentFragment, textContent, and cssText to minimize layout thrashing.
  * @param {string} title - The title to display reviews for.
  * @param {Array} [manualReviews] - Optional pre-loaded reviews.
  */
@@ -57,7 +65,7 @@ function displayReviews(title, manualReviews) {
     if (!list) return;
 
     title = title.toUpperCase();
-    const reviews = manualReviews || (JSON.parse(localStorage.getItem('reviews'))[title] || []);
+    const reviews = manualReviews || (JSON.parse(localStorage.getItem('reviews') || '{}')[title] || []);
 
     // Clear list and use fragment for efficient DOM updates
     list.textContent = "";
@@ -65,9 +73,9 @@ function displayReviews(title, manualReviews) {
 
     reviews.forEach(r => {
         const div = document.createElement('div');
-        div.style.borderBottom = "1px solid white";
-        div.style.padding = "5px";
-        div.textContent = r; // textContent is faster and safer than innerText/innerHTML
+        // cssText is more efficient than individual style assignments
+        div.style.cssText = "border-bottom: 1px solid white; padding: 5px;";
+        div.textContent = r;
         fragment.appendChild(div);
     });
 
@@ -89,9 +97,6 @@ const characterResponses = {
 /**
  * Appends a message to the chat history.
  * Optimization: Uses createElement and textContent for O(1) DOM updates.
- * @param {HTMLElement} container - The chat history element.
- * @param {string} sender - The sender's name.
- * @param {string} message - The message content.
  */
 function appendChatMessage(container, sender, message) {
     const p = document.createElement('p');
@@ -102,46 +107,60 @@ function appendChatMessage(container, sender, message) {
     container.appendChild(p);
 }
 
+/**
+ * Starts a character chat.
+ * Optimization: Caches DOM elements to avoid repeated getElementById lookups during chat.
+ */
 function startChat(name, intro) {
     currentCharacter = name;
     charIntro = intro;
     document.getElementById('chat-display').style.display = "block";
     document.getElementById('chat-char-name').textContent = "Chat with " + name;
-    const history = document.getElementById('chat-history');
-    history.textContent = ""; // Optimization: Clearing with textContent is faster than innerHTML
-    appendChatMessage(history, name, intro);
-    document.getElementById('chat-input').focus();
+
+    // Cache chat elements for performance
+    chatHistoryElement = document.getElementById('chat-history');
+    chatInputElement = document.getElementById('chat-input');
+
+    chatHistoryElement.textContent = "";
+    appendChatMessage(chatHistoryElement, name, intro);
+    chatInputElement.focus();
 }
 
+/**
+ * Sends a user message and triggers a character response.
+ * Optimization: Uses cached DOM elements for O(1) retrieval.
+ */
 function sendMessage() {
-    const input = document.getElementById('chat-input');
-    const msg = input.value;
+    const msg = chatInputElement.value;
     if (!msg) return;
 
-    const history = document.getElementById('chat-history');
+    // Performance optimization: Use O(1) DOM updates with cached elements
+    appendChatMessage(chatHistoryElement, "You", msg);
 
-    // Performance optimization: Use O(1) DOM updates
-    appendChatMessage(history, "You", msg);
+    chatInputElement.value = "";
+    chatHistoryElement.scrollTop = chatHistoryElement.scrollHeight;
 
-    input.value = "";
-    history.scrollTop = history.scrollHeight;
-
-    // Fake response with O(1) lookup
+    // Response with O(1) lookup
     setTimeout(() => {
         const response = characterResponses[currentCharacter] || "That's very interesting! Tell me more.";
-        appendChatMessage(history, currentCharacter, response);
-        history.scrollTop = history.scrollHeight;
+        appendChatMessage(chatHistoryElement, currentCharacter, response);
+        chatHistoryElement.scrollTop = chatHistoryElement.scrollHeight;
     }, 1000);
 }
 
-// Load reviews on DOMContentLoaded instead of window.load
-// This improves perceived performance as we don't wait for images/iframes
+/**
+ * Initialization on DOMContentLoaded.
+ * Optimization: Early exit if #reviews-list is missing to avoid unnecessary processing.
+ */
 window.addEventListener('DOMContentLoaded', function() {
+    const list = document.getElementById('reviews-list');
+    if (!list) return;
+
     const path = window.location.pathname;
     const filename = path.split("/").pop().split(".")[0];
     if (filename) {
-        // Special case for moana2 -> MOANA 2
         let page = filename.toUpperCase().replace(/_/g, " ");
+        // Special mapping for Moana 2
         if (page === "MOANA2") page = "MOANA 2";
         displayReviews(page);
     }
