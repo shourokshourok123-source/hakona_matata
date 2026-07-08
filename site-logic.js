@@ -1,6 +1,8 @@
 
 let currentCharacter = "";
 let charIntro = "";
+let chatHistoryElement = null;
+let chatInputElement = null;
 
 // Initialize Storage
 if (!localStorage.getItem('favorites')) localStorage.setItem('favorites', JSON.stringify([]));
@@ -34,16 +36,35 @@ function toggleWatchlist(title) {
 }
 
 function postReview(title) {
-    const text = document.getElementById('review-text').value;
+    const textarea = document.getElementById('review-text');
+    const text = textarea.value;
     if (!text) return;
     title = title.toUpperCase();
     let reviews = JSON.parse(localStorage.getItem('reviews'));
     if (!reviews[title]) reviews[title] = [];
     reviews[title].push(text);
     localStorage.setItem('reviews', JSON.stringify(reviews));
-    document.getElementById('review-text').value = "";
-    // Performance optimization: pass reviews directly to avoid re-reading from localStorage
-    displayReviews(title, reviews[title]);
+    textarea.value = "";
+
+    // Performance optimization: O(1) DOM update by appending new review directly
+    // instead of full O(N) re-render of the list.
+    const list = document.getElementById('reviews-list');
+    if (list) {
+        list.appendChild(createReviewElement(text));
+    }
+}
+
+/**
+ * Creates a review element with consistent styling.
+ * Optimization: Uses cssText to reduce browser reflows/repaints by applying all styles at once.
+ * @param {string} text - The review content.
+ * @returns {HTMLElement} The styled review element.
+ */
+function createReviewElement(text) {
+    const div = document.createElement('div');
+    div.style.cssText = "border-bottom: 1px solid white; padding: 5px;";
+    div.textContent = text;
+    return div;
 }
 
 /**
@@ -64,11 +85,7 @@ function displayReviews(title, manualReviews) {
     const fragment = document.createDocumentFragment();
 
     reviews.forEach(r => {
-        const div = document.createElement('div');
-        div.style.borderBottom = "1px solid white";
-        div.style.padding = "5px";
-        div.textContent = r; // textContent is faster and safer than innerText/innerHTML
-        fragment.appendChild(div);
+        fragment.appendChild(createReviewElement(r));
     });
 
     list.appendChild(fragment);
@@ -107,36 +124,46 @@ function startChat(name, intro) {
     charIntro = intro;
     document.getElementById('chat-display').style.display = "block";
     document.getElementById('chat-char-name').textContent = "Chat with " + name;
-    const history = document.getElementById('chat-history');
-    history.textContent = ""; // Optimization: Clearing with textContent is faster than innerHTML
-    appendChatMessage(history, name, intro);
-    document.getElementById('chat-input').focus();
+
+    // Performance optimization: Cache frequently accessed chat elements
+    chatHistoryElement = document.getElementById('chat-history');
+    chatInputElement = document.getElementById('chat-input');
+
+    chatHistoryElement.textContent = ""; // Optimization: Clearing with textContent is faster than innerHTML
+    appendChatMessage(chatHistoryElement, name, intro);
+    chatInputElement.focus();
 }
 
 function sendMessage() {
-    const input = document.getElementById('chat-input');
-    const msg = input.value;
+    // Robustness: Ensure cached elements exist before use
+    if (!chatHistoryElement) chatHistoryElement = document.getElementById('chat-history');
+    if (!chatInputElement) chatInputElement = document.getElementById('chat-input');
+
+    if (!chatHistoryElement || !chatInputElement) return;
+
+    const msg = chatInputElement.value;
     if (!msg) return;
 
-    const history = document.getElementById('chat-history');
+    // Performance optimization: Use O(1) DOM updates and cached elements
+    appendChatMessage(chatHistoryElement, "You", msg);
 
-    // Performance optimization: Use O(1) DOM updates
-    appendChatMessage(history, "You", msg);
-
-    input.value = "";
-    history.scrollTop = history.scrollHeight;
+    chatInputElement.value = "";
+    chatHistoryElement.scrollTop = chatHistoryElement.scrollHeight;
 
     // Fake response with O(1) lookup
     setTimeout(() => {
         const response = characterResponses[currentCharacter] || "That's very interesting! Tell me more.";
-        appendChatMessage(history, currentCharacter, response);
-        history.scrollTop = history.scrollHeight;
+        appendChatMessage(chatHistoryElement, currentCharacter, response);
+        chatHistoryElement.scrollTop = chatHistoryElement.scrollHeight;
     }, 1000);
 }
 
 // Load reviews on DOMContentLoaded instead of window.load
 // This improves perceived performance as we don't wait for images/iframes
 window.addEventListener('DOMContentLoaded', function() {
+    // Performance optimization: Early exit if we are not on a page that needs reviews
+    if (!document.getElementById('reviews-list')) return;
+
     const path = window.location.pathname;
     const filename = path.split("/").pop().split(".")[0];
     if (filename) {
